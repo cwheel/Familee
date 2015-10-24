@@ -13,7 +13,6 @@ var app = express();
 
 var rclient = Redis.createClient(); 
 
-
 app.use(session({secret:'grant'}))
 app.use(grant)
 
@@ -30,16 +29,13 @@ app.use(session({
 
 app.use(Passport.initialize());
 app.use(Passport.session());
-app.get("/fitbit/response", function(req, res){
-	res.header('POST https://api.fitbit.com/oauth2/token\nAuthorization: Basic MjI5UkREOiBhZGY5NjdmODNhMjRlMmNlYjFhYzY0ZTRmY2NhMWQyMA==', 0)
-	res.send(req.query)
-})
 
 Passport.use(new LocalStrategy(
   function(username, password, done) {
     rclient.exists(username, function(err, exists) {
     	if (exists) {
 	    	rclient.hgetall(username, function (err, resp) {
+          console.log(resp);
 	    		if (Bcrypt.compareSync(password, resp.pass)) {
 					return done(null, resp);
 	    		} else {
@@ -62,19 +58,9 @@ Passport.deserializeUser(function(user, done) {
   done(null, user)
 });
 
-app.post('/login', Passport.authenticate('local'), function(req, res) {
-    res.send("valid_auth");
-});
-
-app.get('/authstatus', function(req, res) {
-	if (req.user) {
-		res.send("valid_auth");
-	} else {
-		res.send("invalid_auth");
-	}
-});
-
 app.use(express.static(__dirname + '/app'));
 app.listen(3000);
+
+require("./routes")(app)
 
 exports = module.exports = app;
