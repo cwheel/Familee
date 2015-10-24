@@ -2,7 +2,7 @@ var Passport = require('passport');
 var fs = require('fs');
 var grantConfig = JSON.parse(fs.readFileSync('./config/grant.json').toString());
 var request = require("request")
-var User = require("./models/user");
+var User = require("./models/user"); 
 
 module.exports = function(app) {
 	var fitbitAccess_token = null;
@@ -12,6 +12,15 @@ module.exports = function(app) {
 		}
 
 	  	res.redirect('/');
+	}
+	function reAuthFitbit(access_token){
+		var option = {
+			url: "https://api.fitbit.com/oauth2/token",
+			headers: {
+				'Authorization' : "Basic" + " " 
+			}
+		}
+		request()
 	}
 	
 
@@ -37,8 +46,8 @@ module.exports = function(app) {
 		request(testOptions, function(error,response,body) {
 			if (!error && response.statusCode == 200) {
 				var relName = JSON.parse(body).user.fullName;
-
-				User.findOneAndUpdate({user : req.user.user}, {$push: {"relatives": {access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.user_id, name: relName}}}, function(err,m) {
+				console.log({"relatives": {access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.raw.user_id, name: relName}});
+				User.findOneAndUpdate({user : req.user.user}, {$push: {"relatives": {access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.raw.user_id, name: relName}}}, function(err,m) {
 				       res.sendfile("app/routes/oauth_bounce.html");
 				 
 				});
