@@ -3,7 +3,7 @@ var fs = require('fs');
 var grantConfig = JSON.parse(fs.readFileSync('./config/grant.json').toString());
 var request = require("request")
 
-module.exports = function(app) {
+module.exports = function(app, rclient) {
 	var fitbitAccess_token = null;
 	function requireAuth(req, res, next) {
 		if (req.isAuthenticated()) {
@@ -26,10 +26,27 @@ module.exports = function(app) {
 		}
 	});
 
-	app.get("/fitbit/response", function(req, res){
-		fitbitAccess_token = req.query.access_token;
-		res.send(req.query)
-	})
+	app.get("/fitbit/response", function(req, res) {
+		var testOptions = {
+		  url: 'https://api.fitbit.com/1/user/-/profile.json',
+		  headers: {
+		    'Authorization': "Bearer" + " " + req.query.access_token
+		  }
+		};
+		request(testOptions, function(error,response,body){
+			if (!error && response.statusCode == 200) {
+				var relName = JSON.parse(body).user.fullName;
+				var rel = {access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.user_id, name: relName};
+				rel = JSON.stringify(rel);
+
+				rclient.lpush(req.user.user + "_relatives", rel, function (err, status) {
+					res.sendfile("app/routes/oauth_bounce.html");
+			    });
+  			} else {
+  				res.send(body)
+  			}
+		})
+	});
 
 	app.get("/fitbit/getProfile", function(req,res){
 		var testOptions = {

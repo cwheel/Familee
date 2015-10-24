@@ -61,6 +61,6 @@ Passport.deserializeUser(function(user, done) {
 app.use(express.static(__dirname + '/app'));
 app.listen(3000);
 
-require("./routes")(app)
+require("./routes")(app, rclient)
 
 exports = module.exports = app;
