@@ -14,7 +14,7 @@
     "angular-chart.js" : "latest",
     "moment" : "latest",
     "angular-cookies" : "latest",
-    "ng-bootstrap-material" : "latest",
+    "ng-bootstrap-material" : "latest"
   },
   "private": true
 }
