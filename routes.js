@@ -37,10 +37,10 @@ module.exports = function(app) {
 		request(testOptions, function(error,response,body) {
 			if (!error && response.statusCode == 200) {
 				var relName = JSON.parse(body).user.fullName;
+				var dict = {access_token: req.query.access_token, refresh_token: req.query.refresh_token, name: relName};
 
-				User.findOneAndUpdate({user : req.user.user}, {$push: {"relatives": {access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.user_id, name: relName}}}, function(err,m) {
-				       res.sendfile("app/routes/oauth_bounce.html");
-				 
+				User.findOneAndUpdate({user : req.user.user}, {$push: {"relatives": dict}}, function(err,m) {
+				    res.sendfile("app/routes/oauth_bounce.html");
 				});
   			} else {
   				res.send(body);
