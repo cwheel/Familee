@@ -1,0 +1,19 @@
+{
+  "name": "familee",
+  "version": "0.0.1",
+  "dependencies": {
+    "bootstrap": "latest",
+    "jquery": "latest",
+    "font-awesome": "latest",
+    "angular" : "latest",
+    "angular-route" : "latest",
+    "angular-animate" : "latest",
+    "bootstrap-material-design" : "latest",
+    "angular-bootstrap" : "latest",
+    "spinkit" : "latest",
+    "angular-chart.js" : "latest",
+    "moment" : "latest",
+    "angular-cookies" : "latest"
+  },
+  "private": true
+}
