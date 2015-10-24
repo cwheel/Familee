@@ -1,13 +1,16 @@
-<div class="container">
-	<div class="row col-md-5 col-md-offset-4 well">
-		<div class="form-group">
-	      	<input class="form-control floating-label" id="user" placeholder="Email Address" ng-model="login.username" material-input spellcheck="false">
+<div id="login-bkg"></div>
+
+<div id="loginForm" class="container">
+	<div class="row col-md-3 well col-centered">
+		<div id="famileeIcon"></div>
+		<div class="form-group form-group-material-deep-orange">
+	      	<input class="form-control floating-label" id="username" placeholder="Email Address" ng-model="login.username" material-input spellcheck="false">
    		</div>
 
-   		<div class="form-group">
+   		<div class="form-group form-group-material-deep-orange">
 	      	<input type="password" class="form-control floating-label" id="pass" placeholder="Password" ng-keypress="login($event)" ng-model="login.password" material-input>
    		</div>
 	   	
-	   	<button class="btn btn-primary" id="primaryLoginButton" ng-click="login()" material-ripple>Login<div class="ripple-wrapper"></button>
+	   	<button class="btn btn-primary" id="primaryLoginButton" ng-click="onLogin()" material-ripple>Login<div class="ripple-wrapper"></button>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-var familee = angular.module('familee', ['ngRoute', 'ngAnimate']);
+var familee = angular.module('familee', ['ngRoute', 'ngAnimate', 'ngBootstrapMaterial']);
 
 familee.config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider) {
 	$routeProvider

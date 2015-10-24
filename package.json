@@ -19,7 +19,8 @@
 		"grunt-contrib-sass": "latest",
 		"twilio": "latest",
 		"redis": "latest",
-		"grant-express": "592720d305a1a593b1bc99cf7c1be93924e16c7b"
+		"redis-node": "latest",
+		"bcrypt": "latest"
 	},
 	"repository": {}
 }

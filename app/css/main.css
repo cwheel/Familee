@@ -1,0 +1,34 @@
+#primaryLoginButton {
+	width: 100%;
+	background: #FF5722;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+#loginForm {
+	padding-top: 200px;
+}
+
+#famileeIcon {
+	width: 150;
+	height: 150;
+	background: #009688;
+
+	float: none;
+    margin: 0 auto;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+#login-bkg {
+	background-image: url('../res/bkg.jpg');
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-size: cover;
+}
