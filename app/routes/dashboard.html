@@ -37,7 +37,7 @@
       <span ng-click="currentTab = 'Sleeping'" ng-class="{'dashboard-link-selected': currentTab == 'Sleeping'}"class="dashboard-link"><a ui-sref="dashboard.sleep" class="removeLinkColor">Sleeping</a></span>
       <span ng-click="currentTab = 'Sickness'" ng-class="{'dashboard-link-selected': currentTab == 'Sickness'}" class="dashboard-link"><a ui-sref="dashboard.sickness" class="removeLinkColor">Sickness</a></span>
     </div>
-    <div ui-view class="anim-in-out"></div>
+    	<div ui-view data-anim-sync="true" class="anim-in-out anim-slide-right fixUIPosition"></div>
 	</div>
 </div>
 

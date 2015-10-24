@@ -58,6 +58,13 @@
 .outlineless {
     outline: 0; !important
 }
+.fixUIPosition{
+	position: absolute;
+	top:200px;
+	left:0px;
+	height: calc(100% - 200px);
+	width:100%;
+}
 
 body {
 	overflow: hidden;
