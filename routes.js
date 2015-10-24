@@ -34,16 +34,13 @@ module.exports = function(app) {
 		    'Authorization': "Bearer" + " " + req.query.access_token
 		  }
 		};
-		request(testOptions, function(error,response,body){
+		request(testOptions, function(error,response,body) {
 			if (!error && response.statusCode == 200) {
 				var relName = JSON.parse(body).user.fullName;
 
-				User.findOne({user : req.user.user}, function(err, usr) {
-				    usr.relatives = usr.relatives.push({access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.user_id, name: relName});
-
-				    usr.save(function(err) {
+				User.findOneAndUpdate({user : req.user.user}, {$push: {"relatives": {access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.user_id, name: relName}}}, function(err,m) {
 				       res.sendfile("app/routes/oauth_bounce.html");
-				    });
+				 
 				});
   			} else {
   				res.send(body);
@@ -161,12 +158,9 @@ module.exports = function(app) {
 	})			
 
 	app.get("/userinfo/relatives", requireAuth, function (req, res) {
-		console.log(req.user.user);
-		rclient.lrange(req.user.user + "_relatives", 0, 1000, function(err, resp) {
-			//var sp = JSON.parse(resp);
-			res.send(resp);
-			
-	    });
+		User.findOne({user : req.user.user}, function(err, usr) {
+		    res.send(usr.relatives);
+		});
 	});
 
 	app.get("/userinfo", requireAuth, function(req, res) {
