@@ -4,10 +4,10 @@
   </div>
 
   <ul class="nav navbar-nav" style="float: right;">
-    <li material-ripple><a class="link" href="#">Add Relative</a></li>
+    <li material-ripple><a class="link" href="#" data-toggle="modal" data-target="#addRelative">Add Relative</a></li>
 
     <li class="dropdown" material-ripple>
-      <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><b>Cameron Wheeler</b> <b class="caret"></b></a>
+      <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><b>{{ fullname }}</b> <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li material-ripple><a href="#" onclick="window.location='/logout'">Logout</a></li>
       </ul>
@@ -21,4 +21,22 @@
 
 	<div class="col-full-height col-md-10">
 	</div>
+</div>
+
+<div id="addRelative" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add a Relative</h4>
+      </div>
+      <div class="modal-body">
+        <p>Lets get started by choosing your loved ones deivce. Which device do they have?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Next</button>
+      </div>
+    </div>
+
+  </div>
 </div>
