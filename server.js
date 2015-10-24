@@ -14,7 +14,6 @@ var app = express();
 
 var rclient = Redis.createClient(); 
 
-
 app.use(session({secret:'grant'}))
 app.use(grant)
 
@@ -53,6 +52,7 @@ Passport.use(new LocalStrategy(
     rclient.exists(username, function(err, exists) {
     	if (exists) {
 	    	rclient.hgetall(username, function (err, resp) {
+          console.log(resp);
 	    		if (Bcrypt.compareSync(password, resp.pass)) {
 					return done(null, resp);
 	    		} else {
@@ -75,19 +75,9 @@ Passport.deserializeUser(function(user, done) {
   done(null, user)
 });
 
-app.post('/login', Passport.authenticate('local'), function(req, res) {
-    res.send("valid_auth");
-});
-
-app.get('/authstatus', function(req, res) {
-	if (req.user) {
-		res.send("valid_auth");
-	} else {
-		res.send("invalid_auth");
-	}
-});
-
 app.use(express.static(__dirname + '/app'));
 app.listen(3000);
+
+require("./routes")(app)
 
 exports = module.exports = app;

@@ -1,4 +1,4 @@
-#primaryLoginButton {
+#primary-login-button {
 	width: 100%;
 	background: #FF5722;
 }
@@ -8,11 +8,11 @@
     margin: 0 auto;
 }
 
-#loginForm {
+#login-form {
 	padding-top: 200px;
 }
 
-#famileeIcon {
+#familee-icon {
 	width: 150;
 	height: 150;
 	background: #009688;
