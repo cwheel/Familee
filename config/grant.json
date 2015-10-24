@@ -1,7 +1,7 @@
 {
 	"server" : {
 		"protocol": "http",
-		"host": "test.test.net:3000"
+		"host": "localhost:3000"
 	},
 	"fitbit2" : {
 	    "scope_delimiter": " ",
