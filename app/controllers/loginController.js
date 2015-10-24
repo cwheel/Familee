@@ -9,12 +9,18 @@ familee.controller('loginController', ['$scope', '$timeout', '$location', '$http
 		    headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
 		})
 		.success(function(resp) {
-			console.log(resp);
 		    if (resp == "valid_auth") {
-		       alert("yay");
-		    } else {
-		    	alert("boo");
+		      	$location.path("/dashboard");
 		    }
+		})
+		.error(function(err, status) {
+			$scope.login = {};
 		});
+	};
+
+	$scope.watchReturn = function(e) {
+		if (e.which === 13) {
+			$scope.onLogin();
+		}
 	};
 }]);

@@ -5,6 +5,10 @@ familee.config(['$routeProvider','$locationProvider', function($routeProvider, $
 		.when('/', {
 			templateUrl : 'routes/login.html',
 			controller  : 'loginController'
+		})
+		.when('/dashboard', {
+			templateUrl : 'routes/dashboard.html',
+			controller  : 'dashboardController'
 		});
 		
 		$locationProvider.html5Mode(true);

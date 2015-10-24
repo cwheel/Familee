@@ -32,10 +32,12 @@ Passport.use(new LocalStrategy(
 	    		if (Bcrypt.compareSync(password, resp.pass)) {
 					return done(null, resp);
 	    		} else {
-	    			return done(null, false, { message: 'Wrong password.' });
+	    			return done(null, false, { message: 'Wrong credentials.' });
 	    		}
 		      	
 		    });
+    	} else {
+    		return done(null, false, { message: 'Wrong credentials.' });
     	}
     });
   }
@@ -51,6 +53,14 @@ Passport.deserializeUser(function(user, done) {
 
 app.post('/login', Passport.authenticate('local'), function(req, res) {
     res.send("valid_auth");
+});
+
+app.get('/authstatus', function(req, res) {
+	if (req.user) {
+		res.send("valid_auth");
+	} else {
+		res.send("invalid_auth");
+	}
 });
 
 app.use(express.static(__dirname + '/app'));
