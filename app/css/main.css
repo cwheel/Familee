@@ -42,6 +42,6 @@
     opacity: 0;
 }
 
-.outlineless:focus {
-    outline: 0;
+.outlineless {
+    outline: 0; !important
 }
