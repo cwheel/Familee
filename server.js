@@ -30,22 +30,6 @@ app.use(session({
 
 app.use(Passport.initialize());
 app.use(Passport.session());
-app.get("/fitbit/response", function(req, res){
-	console.log(req.query)
-	var testOptions = {
-	  url: 'https://api.fitbit.com/1/user/-/profile.json',
-	  headers: {
-	    'Authorization': "Bearer" + " " + req.query.access_token
-	  }
-	};
-
-	function testCallback(error, response, body) {
-		res.send(body)
-	};
-	console.log(testOptions)
-	console.log("test")
-	request(testOptions,testCallback)
-})
 
 Passport.use(new LocalStrategy(
   function(username, password, done) {
