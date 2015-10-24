@@ -1,11 +1,11 @@
-familee.controller('mainController', ['$scope', '$timeout', '$location', '$http', function($scope, $timeout, $location, $http) {
+familee.controller('mainController', ['$scope', '$timeout', '$state', '$http', function($scope, $timeout, $state, $http) {
 	$http({
 	    method  : 'GET',
 	    url     : '/authstatus',
 	})
 	.success(function(resp) {
 	    if (resp == "valid_auth") {
-	      	$location.path("/dashboard");
+	      	$state.go("dashboard");
 	    }
 	});
 }]);

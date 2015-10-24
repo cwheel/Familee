@@ -34,6 +34,18 @@
 	background-size: cover;
 }
 
+#familee-icon-white {
+	width: 50;
+	height: 50;
+	background-image: url('../res/icon-white.png');
+	background-size: cover;
+	
+	float: none;
+    margin: 0 auto;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
 .fade {
     transition: 0.5s linear all;
     opacity: 1;

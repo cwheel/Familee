@@ -17,14 +17,27 @@
 <div class="row-fluid">
 	<div class="col-full-height col-md-2" id="family-members">
     <div ng-repeat="relative in relatives">
-      <div class="row relative">
+      <div class="row relative" ng-class="{'relative-selected': selectedRow == relative.name}" ng-click="selectRow(relative.name)">
         {{relative.name}}
         <br>
         <div class="subtext">Some Subtext</div>
       </div>
+    </div>
 	</div>
 
 	<div class="col-full-height col-md-10">
+    <div class="row">
+      <div id="relative-status" class="col-md-12">Cameron may not be doing so well.</div>
+      <div id="status-subtext">Check in on his...</div>
+    </div>
+
+    <div class="row dash-link-bar">
+      <span ng-click="currentTab = 'Overview'" ng-class="{'dashboard-link-selected': currentTab == 'Overview'}" class="dashboard-link"><a ui-sref="dashboard.main" class="removeLinkColor">Overview</a></span>
+      <span ng-click="currentTab = 'Movement'" ng-class="{'dashboard-link-selected': currentTab == 'Movement'}"class="dashboard-link"><a ui-sref="dashboard.movement" class="removeLinkColor">Movement</a></span>
+      <span ng-click="currentTab = 'Sleeping'" ng-class="{'dashboard-link-selected': currentTab == 'Sleeping'}"class="dashboard-link"><a ui-sref="dashboard.sleep" class="removeLinkColor">Sleeping</a></span>
+      <span ng-click="currentTab = 'Sickness'" ng-class="{'dashboard-link-selected': currentTab == 'Sickness'}" class="dashboard-link"><a ui-sref="dashboard.sickness" class="removeLinkColor">Sickness</a></span>
+    </div>
+    <div ui-view class="anim-in-out"></div>
 	</div>
 </div>
 
@@ -66,7 +79,7 @@
       </div>
 
       <div class="modal-footer">
-        <button id="nextButton" type="button" class="btn btn-primary" ng-show="showRelativeNext" ng-click="next()">Next</button>
+        <button id="nextButton" type="button" class="btn btn-primary" ng-show="showRelativeNext" ng-click="next()" style="margin: 10;">Next</button>
       </div>
     </div>
 

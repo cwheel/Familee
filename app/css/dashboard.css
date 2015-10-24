@@ -2,6 +2,7 @@
 	background: #FFF;
 	border-right: solid 1px #FF5722;
 	margin: 0;
+	z-index: 999999;
 }
 
 .col-full-height {
@@ -23,6 +24,7 @@
 }
 
 .fitbit-device:hover {
+	cursor: pointer;
 	background: #c3c3c3;
 }
 
@@ -52,6 +54,16 @@
 	cursor: pointer;
 }
 
+.relative-selected {
+	background: #FF8A65;
+}
+
+#status-subtext {
+	color: #999;
+	font-size: 13;
+	text-align: center;
+}
+
 .subtext {
 	color: #999;
 	font-size: 10;
@@ -62,4 +74,39 @@
 	padding-bottom: 10px;
 	font-weight: 100;
 	font-size: 30px;
+}
+
+#relative-status {
+	font-size: 35px;
+	font-weight: 700;
+	text-align: center;
+	margin-top: 50px;
+}
+
+.dashboard-link {
+	font-size: 18px;
+	margin: 15px;
+	color: #444;
+}
+
+.dashboard-link-selected {
+	border-bottom: solid 3px #FF5722;
+}
+
+.dashboard-link:hover {
+	cursor: pointer;
+	border-bottom: solid 3px #FF5722;	
+}
+
+.dash-link-bar {
+	margin: 30px;
+	text-align: center;
+}
+.removeLinkColor{
+	color:inherit;
+	text-decoration: none;
+}
+.removeLinkColor:hover{
+	color:inherit;
+	text-decoration: none;
 }

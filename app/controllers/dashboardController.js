@@ -1,10 +1,24 @@
-familee.controller('dashboardController', ['$scope', '$timeout', '$location', '$http', function($scope, $timeout, $location, $http) {
+familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$http', function($scope, $timeout, $state, $http) {
 	$scope.fullname = "";
 	$scope.showRelativeNext = false;
 	$scope.addRelative2 = false;
 	$scope.addRelative1 = true;
 	$scope.addingDevice = "";
 	$scope.relatives = [];
+	$scope.selectedRow = "";
+	$scope.currentTab = "";
+
+	$state.go('dashboard.main');
+
+	$http({
+	    method  : 'GET',
+	    url     : '/authstatus',
+	})
+	.success(function(resp) {
+	    if (resp != "valid_auth") {
+	      	$state.go("login");
+	    }
+	});
 
 	$http({
 	    method  : 'GET',
@@ -12,6 +26,10 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$location', '$
 	})
 	.success(function(resp) {
 	    $scope.relatives = angular.fromJson(resp);
+
+	    if ($scope.relatives.length > 0) {
+	    	$scope.selectedRow = $scope.relatives[0].name;
+		}
 	});
 
 	$http({
@@ -30,6 +48,10 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$location', '$
 		$scope.addingDevice = device;
 		$scope.showRelativeNext = true;
 
+	};
+
+	$scope.selectRow = function(row) {
+		$scope.selectedRow = row;
 	};
 
 	$scope.next = function() {

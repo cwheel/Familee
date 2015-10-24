@@ -15,7 +15,8 @@
     "moment" : "latest",
     "angular-cookies" : "latest",
     "ng-bootstrap-material" : "latest",
-    "angular-ui-router" : "latest"
+    "angular-ui-router" : "latest",
+    "angular-ui-router-anim-in-out" : "latest"
   },
   "private": true
 }
