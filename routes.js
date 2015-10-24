@@ -49,7 +49,6 @@ module.exports = function(app) {
 				console.log({"relatives": {access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.raw.user_id, name: relName}});
 				User.findOneAndUpdate({user : req.user.user}, {$push: {"relatives": {access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.raw.user_id, name: relName}}}, function(err,m) {
 				       res.sendfile("app/routes/oauth_bounce.html");
-				 
 				});
   			} else {
   				res.send(body);
