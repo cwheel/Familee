@@ -2,8 +2,9 @@ var Passport = require('passport');
 var fs = require('fs');
 var grantConfig = JSON.parse(fs.readFileSync('./config/grant.json').toString());
 var request = require("request")
+var User = require("./models/user");
 
-module.exports = function(app, rclient) {
+module.exports = function(app) {
 	var fitbitAccess_token = null;
 	function requireAuth(req, res, next) {
 		if (req.isAuthenticated()) {
@@ -36,14 +37,16 @@ module.exports = function(app, rclient) {
 		request(testOptions, function(error,response,body){
 			if (!error && response.statusCode == 200) {
 				var relName = JSON.parse(body).user.fullName;
-				var rel = {access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.user_id, name: relName};
-				rel = JSON.stringify(rel);
 
-				rclient.lpush(req.user.user + "_relatives", rel, function (err, status) {
-					res.sendfile("app/routes/oauth_bounce.html");
-			    });
+				User.findOne({user : req.user.user}, function(err, usr) {
+				    usr.relatives = usr.relatives.push({access_token: req.query.access_token, refresh_token: req.query.refresh_token, user_id: req.query.user_id, name: relName});
+
+				    usr.save(function(err) {
+				       res.sendfile("app/routes/oauth_bounce.html");
+				    });
+				});
   			} else {
-  				res.send(body)
+  				res.send(body);
   			}
 		})
 	});
@@ -151,12 +154,20 @@ module.exports = function(app, rclient) {
 		request(testOptions, function(error,response,body){
 			if (!error && response.statusCode == 200) {
    				res.send(body) // Show the HTML for the Google homepage.
-  			}else {
+  		 	} else {
   				res.send(body)
   			}
 		})
 	})			
 
+	app.get("/userinfo/relatives", requireAuth, function (req, res) {
+		console.log(req.user.user);
+		rclient.lrange(req.user.user + "_relatives", 0, 1000, function(err, resp) {
+			//var sp = JSON.parse(resp);
+			res.send(resp);
+			
+	    });
+	});
 
 	app.get("/userinfo", requireAuth, function(req, res) {
 	    res.send({name : req.user.name});
