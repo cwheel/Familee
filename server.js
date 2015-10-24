@@ -15,7 +15,7 @@ var app = express();
 
 mongoose.connect('mongodb://localhost/sprox');
 
-//User({name: "Cameron Wheeler", pass: "$2a$10$u5Gpzryz5/9xIrsL6pu6resMIltqp/5grI516724ErZDhKzdkVabC", "user" : "test"}).save();
+User({name: "Cameron Wheeler", pass: "$2a$10$u5Gpzryz5/9xIrsL6pu6resMIltqp/5grI516724ErZDhKzdkVabC", "user" : "test"}).save();
 
 app.use(session({secret:'grant'}))
 app.use(grant)
