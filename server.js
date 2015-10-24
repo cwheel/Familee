@@ -10,7 +10,7 @@ var Passport = require('passport');
 var mongoose = require('mongoose');
 var LocalStrategy = require('passport-local').Strategy;
 var Bcrypt = require('bcrypt');
-var User = require("./models/user");
+var User = require("./models/User");
 var app = express();
 
 mongoose.connect('mongodb://localhost/sprox');
