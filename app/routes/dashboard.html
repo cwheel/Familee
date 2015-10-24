@@ -16,11 +16,11 @@
 
 <div class="row-fluid">
 	<div class="col-full-height col-md-2" id="family-members">
-    <div ng-repeat="relative in relatives">
-      <div class="row relative" ng-class="{'relative-selected': selectedRow == relative.name}" ng-click="selectRow(relative.name)">
-        {{relative.name}}
+    <div ng-repeat="device in devices">
+      <div class="row relative" ng-class="{'relative-selected': selectedRow == device.owner}" ng-click="selectRow(device.owner)">
+        {{device.owner}}
         <br>
-        <div class="subtext">Some Subtext</div>
+        <div class="subtext">{{device.lastSyncTime}}</div>
       </div>
     </div>
 	</div>
@@ -75,7 +75,7 @@
       </div>
 
       <div id="secondaryAddMessage" class="modal-body " ng-show="addRelative2">
-        <p>Great, to set up your relatives Fitbit {{ addingDevice }} we'll need to have you login with the Fitbit account the device is associated with. This account may be registered to you, or to your relative depending on who's device it actually is. When your ready, press Next and we'll open up Fitbits website for you to login in at.</p>
+        <p>Great, to set up your loved ones Fitbit {{ addingDevice }} we'll need to have you login with the Fitbit account the device is associated with. This account may be registered to you, or to your relative depending on who's device it actually is. When your ready, press Next and we'll open up Fitbits website for you to login in at.</p>
       </div>
 
       <div class="modal-footer">
