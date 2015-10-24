@@ -1,0 +1,16 @@
+{
+	"server" : {
+		"protocol": "http",
+		"host": "localhost:3000"
+	},
+	"fitbit2" : {
+	    "scope_delimiter": " ",
+	    "oauth": 2,
+	    "scope": "activity heartrate location nutrition profile settings sleep social weight",
+	    "custom_parameters": ["prompt"],
+		"key": "229RDD",
+		"secret": "adf967f83a24e2ceb1ac64e4fcca1d20",
+		"consumer_key": "700e0cac55b6cfee415c119300de75b8",
+		"callback": "/fitbit/response"
+	}
+}

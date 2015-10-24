@@ -1,4 +1,7 @@
-var express = require('express');
+var express = require('express')
+  , session = require('express-session');
+var Grant = require('grant').express()
+  , grant = new Grant(require('./config/grant.json'));
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -9,6 +12,10 @@ var Bcrypt = require('bcrypt');
 var app = express();
 
 var rclient = Redis.createClient(); 
+
+
+app.use(session({secret:'grant'}))
+app.use(grant)
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -23,6 +30,10 @@ app.use(session({
 
 app.use(Passport.initialize());
 app.use(Passport.session());
+app.get("/fitbit/response", function(req, res){
+	res.header('POST https://api.fitbit.com/oauth2/token\nAuthorization: Basic MjI5UkREOiBhZGY5NjdmODNhMjRlMmNlYjFhYzY0ZTRmY2NhMWQyMA==', 0)
+	res.send(req.query)
+})
 
 Passport.use(new LocalStrategy(
   function(username, password, done) {
