@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     },
     shell: {
       redis: {
-        command: "redis-server",
+        command: "mongod",
         options: {
           async: true,
           stdout: false,
