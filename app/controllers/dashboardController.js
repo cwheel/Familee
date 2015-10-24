@@ -4,7 +4,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	$scope.addRelative2 = false;
 	$scope.addRelative1 = true;
 	$scope.addingDevice = "";
-	$scope.relatives = [];
+	$scope.devices = [];
 	$scope.selectedRow = "";
 	$scope.currentTab = "";
 
@@ -22,13 +22,28 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 
 	$http({
 	    method  : 'GET',
-	    url     : '/userinfo/relatives',
+	    url     : '/userinfo/devices',
+	    
 	})
 	.success(function(resp) {
-	    $scope.relatives = angular.fromJson(resp);
+	    $scope.devices = angular.fromJson(resp);
 
-	    if ($scope.relatives.length > 0) {
-	    	$scope.selectedRow = $scope.relatives[0].name;
+	    if ($scope.devices.length > 0) {
+	    	$scope.selectedRow = $scope.devices[0].owner;
+		}
+		
+		for (var i = 0; i < $scope.devices.length; i++) {
+			$http({
+			    method  : 'GET',
+			    url     : '/fitbit/getDevices',
+			    params  : {name: $scope.devices[i].owner}
+			})
+			.success(function(resp) {
+			    var dev = angular.fromJson(resp)[0];
+			    $scope.devices[i].battery = dev.battery;
+			    $scope.devices[i].deviceVersion = dev.deviceVersion;
+			    $scope.devices[i].lastSyncTime = dev.lastSyncTime;
+			});
 		}
 	});
 

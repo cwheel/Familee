@@ -13,7 +13,7 @@ var Bcrypt = require('bcrypt');
 var User = require("./models/User");
 var app = express();
 
-mongoose.connect('mongodb://localhost/sprox');
+mongoose.connect('mongodb://localhost/familee');
 
 //User({name: "Cameron Wheeler", pass: "$2a$10$u5Gpzryz5/9xIrsL6pu6resMIltqp/5grI516724ErZDhKzdkVabC", "user" : "test"}).save();
 

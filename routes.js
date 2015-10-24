@@ -31,6 +31,7 @@ module.exports = function(app) {
 		}
 		request(option,function(error,response,body){
 			var b = JSON.parse(body);
+
 			console.log("Sending: " + b.access_token);
 			console.log("Sending: " + b.refresh_token);
 			if (!error && response.statusCode == 200) {
@@ -61,9 +62,6 @@ module.exports = function(app) {
 		}
 	});
 
-	app.get("/test", function(req,res){
-		reAuthFitbit("test", "James Sullivan", res)
-	});
 	app.get("/fitbit/response", requireAuth, function(req, res) {
 		var testOptions = {
 		  url: 'https://api.fitbit.com/1/user/-/profile.json',
@@ -77,7 +75,7 @@ module.exports = function(app) {
 
 				console.log("here" + relName);
 
-				Fitbit({access_token: req.query.access_token, refresh_token: req.query.refresh_token, owner: relName}).save();
+				Fitbit({access_token: req.query.access_token, refresh_token: req.query.refresh_token, owner: relName, username: req.user.user}).save();
 				res.sendfile("app/routes/oauth_bounce.html")
   			} else {
   				res.send(body);
@@ -202,7 +200,7 @@ module.exports = function(app) {
 		reAuthFitbit(req.query.name, res)
 			Fitbit.findOne({ owner: req.query.name }, function (err, fb) {
 			var testOptions = {
-			  url: 'https://api.fitbit.com/1/user/-/sleep/date/' + req.query.date +'.json',
+			  url: 'https://api.fitbit.com/1/user/-/sleep/date/' + req.query.date + '.json',
 			  headers: {
 			    'Authorization': "Bearer" + " " + fb.access_token
 			  }
@@ -218,9 +216,9 @@ module.exports = function(app) {
 		})
 	})			
 
-	app.get("/userinfo/relatives", requireAuth, function (req, res) {
-		User.findOne({user : req.user.user}, function(err, usr) {
-		    res.send(usr.relatives);
+	app.get("/userinfo/devices", requireAuth, function (req, res) {
+		Fitbit.find({username : req.user.user}, function(err, devices) {
+		    res.send(devices);
 		});
 	});
 
