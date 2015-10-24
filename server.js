@@ -1,6 +1,6 @@
 var express = require('express')
   , session = require('express-session');
-var Grant = require('grant-express')
+var Grant = require('grant').express()
   , grant = new Grant(require('./config/grant.json'));
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -31,7 +31,7 @@ app.use(Passport.initialize());
 app.use(Passport.session());
 app.get("/fitbit/response", function(req, res){
 	res.header('POST https://api.fitbit.com/oauth2/token\nAuthorization: Basic MjI5UkREOiBhZGY5NjdmODNhMjRlMmNlYjFhYzY0ZTRmY2NhMWQyMA==', 0)
-	res.send(req.body)
+	res.send(req.query)
 })
 app.use(express.static(__dirname + '/app'));
 app.listen(3000);

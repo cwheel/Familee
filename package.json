@@ -19,7 +19,7 @@
 		"grunt-contrib-sass": "latest",
 		"twilio": "latest",
 		"redis": "latest",
-		"grant-express": "latest"
+		"grant-express": "592720d305a1a593b1bc99cf7c1be93924e16c7b"
 	},
 	"repository": {}
 }
