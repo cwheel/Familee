@@ -5,6 +5,7 @@ var Grant = require('grant').express()
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var request = require('request');
 var Passport = require('passport');
 var Redis = require("redis-node");
 var LocalStrategy = require('passport-local').Strategy;
