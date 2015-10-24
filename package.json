@@ -18,7 +18,8 @@
 		"passport-local" : "latest",
 		"grunt-contrib-sass": "latest",
 		"twilio": "latest",
-		"redis": "latest"
+		"redis": "latest",
+		"grant-express": "latest"
 	},
 	"repository": {}
 }
