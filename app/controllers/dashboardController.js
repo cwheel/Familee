@@ -1,4 +1,4 @@
-familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$http', function($scope, $timeout, $state, $http, $rootScope) {
+familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$http', '$rootScope', function($scope, $timeout, $state, $http, $rootScope) {
 	$scope.fullname = "";
 	$scope.showRelativeNext = false;
 	$scope.addRelative2 = false;
