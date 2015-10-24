@@ -35,7 +35,6 @@ Passport.use(new LocalStrategy(
     rclient.exists(username, function(err, exists) {
     	if (exists) {
 	    	rclient.hgetall(username, function (err, resp) {
-          console.log(resp);
 	    		if (Bcrypt.compareSync(password, resp.pass)) {
 					return done(null, resp);
 	    		} else {

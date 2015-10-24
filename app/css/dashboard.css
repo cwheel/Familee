@@ -1,8 +1,14 @@
 #family-members {
-	width: 15%;
-	height: 100%;
-	float: left;
 	background: #FFF;
 	border-right: solid 1px #FF5722;
-	position: relative;
+	margin: 0;
+}
+
+.col-full-height {
+  height: calc(100% - 60px);
+  vertical-align: middle;
+}
+
+.link {
+	cursor: pointer;
 }

@@ -26,6 +26,16 @@ module.exports = function(app) {
 		res.send(req.query)
 	});
 
+	app.get("/userinfo", requireAuth, function(req, res) {
+	    res.send({name : req.user.name});
+	});
+
+	app.get("/logout", requireAuth, function(req, res) {
+	    req.session.destroy();
+		req.logout();
+		res.redirect('/');
+	});
+
 	app.get("*", function(req, res) {
 	    res.redirect("/");
 	});
