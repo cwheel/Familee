@@ -18,7 +18,8 @@
 		"passport-local" : "latest",
 		"grunt-contrib-sass": "latest",
 		"twilio": "latest",
-		"redis": "latest"
+		"redis-node": "latest",
+		"bcrypt": "latest"
 	},
 	"repository": {}
 }
