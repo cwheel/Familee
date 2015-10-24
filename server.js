@@ -29,8 +29,6 @@ Passport.use(new LocalStrategy(
     rclient.exists(username, function(err, exists) {
     	if (exists) {
 	    	rclient.hgetall(username, function (err, resp) {
-	    		console.log(resp);
-	    		console.log(password);
 	    		if (Bcrypt.compareSync(password, resp.pass)) {
 					return done(null, resp);
 	    		} else {
@@ -51,7 +49,7 @@ Passport.deserializeUser(function(user, done) {
   done(null, user)
 });
 
-app.get('/login', Passport.authenticate('local'), function(req, res) {
+app.post('/login', Passport.authenticate('local'), function(req, res) {
     res.send("valid_auth");
 });
 
