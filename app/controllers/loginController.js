@@ -1,4 +1,4 @@
-familee.controller('loginController', ['$scope', '$timeout', '$location', '$http', function($scope, $timeout, $location, $http) {
+familee.controller('loginController', ['$scope', '$timeout', '$state', '$http', function($scope, $timeout, $state, $http) {
 	$scope.login = {};
 
 	$scope.onLogin = function() {
@@ -10,7 +10,7 @@ familee.controller('loginController', ['$scope', '$timeout', '$location', '$http
 		})
 		.success(function(resp) {
 		    if (resp == "valid_auth") {
-		      	$location.path("/dashboard");
+		      	$state.go("dashboard");
 		    }
 		})
 		.error(function(err, status) {

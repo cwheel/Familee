@@ -1,15 +1,17 @@
-var familee = angular.module('familee', ['ngRoute', 'ngAnimate', 'ngBootstrapMaterial']);
+var familee = angular.module('familee', ['ui.router', 'ngAnimate', 'ngBootstrapMaterial']);
 
-familee.config(['$routeProvider','$locationProvider', function($routeProvider, $locationProvider) {
-	$routeProvider
-		.when('/', {
-			templateUrl : 'routes/login.html',
-			controller  : 'loginController'
-		})
-		.when('/dashboard', {
-			templateUrl : 'routes/dashboard.html',
-			controller  : 'dashboardController'
-		});
-		
-		$locationProvider.html5Mode(true);
+familee.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+	$urlRouterProvider.otherwise("/");
+
+	$stateProvider
+	    .state('login', {
+	      url: "/",
+	      templateUrl: "routes/login.html",
+	      controller: 'loginController'
+	    })
+	    .state('dashboard', {
+	      url: "/dashboard",
+	      templateUrl: "routes/dashboard.html",
+	      controller: 'dashboardController'
+	    });
 }]);
