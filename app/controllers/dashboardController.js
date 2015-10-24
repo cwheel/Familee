@@ -4,6 +4,15 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$location', '$
 	$scope.addRelative2 = false;
 	$scope.addRelative1 = true;
 	$scope.addingDevice = "";
+	$scope.relatives = [];
+
+	$http({
+	    method  : 'GET',
+	    url     : '/userinfo/relatives',
+	})
+	.success(function(resp) {
+	    $scope.relatives = angular.fromJson(resp);
+	});
 
 	$http({
 	    method  : 'GET',

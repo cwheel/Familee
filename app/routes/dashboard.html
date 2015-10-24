@@ -4,7 +4,7 @@
   </div>
 
   <ul class="nav navbar-nav outlineless" style="float: right;">
-    <li material-ripple><a class="link" href="#" data-toggle="modal" data-target="#addRelative" style="outline: 0">Add Relative</a></li>
+    <li material-ripple><a class="link" href="#" data-toggle="modal" data-target="#addRelative" style="outline: 0">New Family Member</a></li>
     <li class="dropdown" material-ripple>
       <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><b>{{ fullname }}</b> <b class="caret"></b></a>
       <ul class="dropdown-menu">
@@ -16,6 +16,12 @@
 
 <div class="row-fluid">
 	<div class="col-full-height col-md-2" id="family-members">
+    <div ng-repeat="relative in relatives">
+      <div class="row relative">
+        {{relative.name}}
+        <br>
+        <div class="subtext">Some Subtext</div>
+      </div>
 	</div>
 
 	<div class="col-full-height col-md-10">
@@ -27,7 +33,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title" ng-show="addRelative1">Add a Relative</h4>
+        <h4 class="modal-title" ng-show="addRelative1">Add a Family Member</h4>
         <h4 id="secondaryAddTitle" class="modal-title" ng-show="addRelative2">Connect to Fitbit</h4>
       </div>
       <div class="modal-body " ng-show="addRelative1">

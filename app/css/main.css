@@ -15,8 +15,9 @@
 #familee-icon {
 	width: 150;
 	height: 150;
-	background: #009688;
-
+	background-image: url('../res/icon.png');
+	background-size: cover;
+	
 	float: none;
     margin: 0 auto;
     margin-top: 35px;
@@ -44,4 +45,8 @@
 
 .outlineless {
     outline: 0; !important
+}
+
+body {
+	overflow: hidden;
 }
