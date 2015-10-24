@@ -6,6 +6,8 @@ var User = require("./models/User");
 var Fitbit = require("./models/Fitbit"); 
 
 module.exports = function(app) {
+	var reauth = false;
+
 	var fitbitAccess_token = null;
 	function requireAuth(req, res, next) {
 		if (req.isAuthenticated()) {
@@ -14,39 +16,37 @@ module.exports = function(app) {
 
 	  	res.redirect('/');
 	}
-	function reAuthFitbit(owner, res){
-		Fitbit.findOne({ owner: owner }, function (err, fb) {
-			console.log(fb)
-		var option = {
-			url: "https://api.fitbit.com/oauth2/token",
-			headers: {
-				'Authorization' : "Basic MjI5UkREOmFkZjk2N2Y4M2EyNGUyY2ViMWFjNjRlNGZjY2ExZDIw",
-				'Content-Type' : "application/x-www-form-urlencoded",
-			},
-			method: 'POST',
-			form: {
-				"grant_type" : 'refresh_token',
-				"refresh_token" : fb.refresh_token
-			}
-		}
-		request(option,function(error,response,body){
-			var b = JSON.parse(body);
 
-			console.log("Sending: " + b.access_token);
-			console.log("Sending: " + b.refresh_token);
-			if (!error && response.statusCode == 200) {
-				Fitbit.findOne({owner : owner}, function(err, fb) {
-					fb.access_token = b.access_token;
-					fb.refresh_token = b.refresh_token;
-					fb.save();
-				});
-				console.log(b.access_token)
-			return b.access_token
-  			} else {
-  				res.send(body);
-  			}
-		});
-	})
+	function reAuthFitbit(owner, res){
+		if (reauth) {
+			Fitbit.findOne({ owner: owner }, function (err, fb) {
+				console.log(fb)
+			var option = {
+				url: "https://api.fitbit.com/oauth2/token",
+				headers: {
+					'Authorization' : "Basic MjI5UkREOmFkZjk2N2Y4M2EyNGUyY2ViMWFjNjRlNGZjY2ExZDIw",
+					'Content-Type' : "application/x-www-form-urlencoded",
+				},
+				method: 'POST',
+				form: {
+					"grant_type" : 'refresh_token',
+					"refresh_token" : fb.refresh_token
+				}
+			}
+			request(option,function(error,response,body){
+				var b = JSON.parse(body);
+
+				if (!error && response.statusCode == 200) {
+					Fitbit.findOne({owner : owner}, function(err, fb) {
+						fb.access_token = b.access_token;
+						fb.refresh_token = b.refresh_token;
+						fb.save();
+					});
+
+					return b.access_token
+	  			}
+			});
+		})}		
 	}
 	
 

@@ -1,4 +1,4 @@
-familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$http', function($scope, $timeout, $state, $http, $rootScope) {
+familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$http', '$rootScope', function($scope, $timeout, $state, $http, $rootScope) {
 	$scope.fullname = "";
 	$scope.showRelativeNext = false;
 	$scope.addRelative2 = false;
@@ -6,9 +6,8 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	$scope.addingDevice = "";
 	$scope.devices = [];
 	$rootScope.selectedRow = "";
-	$scope.currentTab = "";
-
-	$state.go('dashboard.main');
+	$scope.currentTab = "Overview";
+	//$state.go('dashboard.main');
 
 	$http({
 	    method  : 'GET',
@@ -29,11 +28,11 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	    $scope.devices = angular.fromJson(resp);
 
 	    if ($scope.devices.length > 0) {
-	    	$scope.selectedRow = $scope.devices[0].owner;
+	    	$rootScope.selectedRow = $scope.devices[0].owner;
 		}
-		
-		for (var i = 0; i < $scope.devices.length; i++) {
-			$http({
+	});
+
+	/*$http({
 			    method  : 'GET',
 			    url     : '/fitbit/getDevices',
 			    params  : {name: $scope.devices[i].owner}
@@ -43,9 +42,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 			    $scope.devices[i].battery = dev.battery;
 			    $scope.devices[i].deviceVersion = dev.deviceVersion;
 			    $scope.devices[i].lastSyncTime = dev.lastSyncTime;
-			});
-		}
-	});
+			});*/
 
 	$http({
 	    method  : 'GET',
@@ -66,7 +63,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	};
 
 	$scope.selectRow = function(row) {
-		$scope.selectedRow = row;
+		$rootScope.selectedRow = row;
 	};
 
 	$scope.next = function() {
