@@ -3,7 +3,7 @@
     <a class="navbar-brand" style="font-family: 'Poiret One', cursive;">Familee</a>
   </div>
 
-  <ul class="nav navbar-nav" style="float: right;">
+  <ul class="nav navbar-nav outlineless" style="float: right">
     <li material-ripple><a class="link" href="#" data-toggle="modal" data-target="#addRelative">Add Relative</a></li>
 
     <li class="dropdown" material-ripple>
@@ -28,13 +28,40 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Add a Relative</h4>
+        <h4 class="modal-title" ng-show="addRelative1">Add a Relative</h4>
+        <h4 class="modal-title" ng-show="addRelative2">Connect to Fitbit</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body fade" ng-show="addRelative1">
         <p>Lets get started by choosing your loved ones deivce. Which device do they have?</p>
+        <div class="row" style="margin-top: 40px;">
+        	<div class="col-md-2"></div>
+        	<div class="col-md-3 fitbit-device-col" ng-click="chooseDevice('flex')">
+        		<div class="fitbit-device">
+        			<div class="fitbit-icon-holder" style="background-image: url('../res/flex.png')"></div>
+        		</div>
+        		<div style="padding-left: 35px;">Flex</div>
+        	</div>
+        	<div class="col-md-3 fitbit-device-col" ng-click="chooseDevice('charge')">
+        		<div class="fitbit-device">
+        			<div class="fitbit-icon-holder" style="background-image: url('../res/charge.png')"></div>
+        		</div>
+        		<div style="padding-left: 25px;">Charge</div>
+        	</div>
+        	<div class="col-md-3 fitbit-device-col">
+        		<div class="fitbit-device" ng-click="chooseDevice('surge')">
+        			<div class="fitbit-icon-holder" style="background-image: url('../res/surge.png')"></div>
+        		</div>
+        		<div style="padding-left: 30px;">Surge</div>
+        	</div>
+        </div>
       </div>
+
+      <div class="modal-body fade" ng-show="addRelative2">
+        <p>Great, to set up your relatives Fitbit {{ addingDevice }} we'll need to have you login with the Fitbit account the device is associated with. This account may be registered to you, or to your relative depending on who's device it actually is. When your ready, press Next and we'll open up Fitbits website for you to login in at.</p>
+      </div>
+
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Next</button>
+        <button type="button" class="btn btn-primary" ng-show="showRelativeNext" data-dismiss="modal">Next</button>
       </div>
     </div>
 
