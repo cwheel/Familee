@@ -1,4 +1,4 @@
-var familee = angular.module('familee', ['ui.router', 'ngAnimate', 'ngBootstrapMaterial', 'anim-in-out']);
+var familee = angular.module('familee', ['ui.router', 'ngAnimate', 'ngBootstrapMaterial', 'anim-in-out', 'chart.js']);
 
 familee.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise("/");

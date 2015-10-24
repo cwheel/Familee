@@ -1,11 +1,11 @@
-familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$http', function($scope, $timeout, $state, $http) {
+familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$http', function($scope, $timeout, $state, $http, $rootScope) {
 	$scope.fullname = "";
 	$scope.showRelativeNext = false;
 	$scope.addRelative2 = false;
 	$scope.addRelative1 = true;
 	$scope.addingDevice = "";
 	$scope.devices = [];
-	$scope.selectedRow = "";
+	$rootScope.selectedRow = "";
 	$scope.currentTab = "";
 
 	$state.go('dashboard.main');
