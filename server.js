@@ -5,6 +5,7 @@ var Grant = require('grant').express()
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var request = require('request');
 var Passport = require('passport');
 var Redis = require("redis-node");
 var LocalStrategy = require('passport-local').Strategy;
@@ -31,8 +32,20 @@ app.use(session({
 app.use(Passport.initialize());
 app.use(Passport.session());
 app.get("/fitbit/response", function(req, res){
-	res.header('POST https://api.fitbit.com/oauth2/token\nAuthorization: Basic MjI5UkREOiBhZGY5NjdmODNhMjRlMmNlYjFhYzY0ZTRmY2NhMWQyMA==', 0)
-	res.send(req.query)
+	console.log(req.query)
+	var testOptions = {
+	  url: 'https://api.fitbit.com/1/user/-/profile.json',
+	  headers: {
+	    'Authorization': "Bearer" + " " + req.query.access_token
+	  }
+	};
+
+	function testCallback(error, response, body) {
+		res.send(body)
+	};
+	console.log(testOptions)
+	console.log("test")
+	request(testOptions,testCallback)
 })
 
 Passport.use(new LocalStrategy(
