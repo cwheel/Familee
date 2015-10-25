@@ -60,7 +60,7 @@ var alerts = schedule.scheduleJob('0 0 0 * *', function() {
       for (var i = 0; i < itms.length; i++) {
         Fitbit.findOne({username : itms[i].username}, function (err, user) {
           Fitbit.findOne({ owner: name }, function (err, fb) {
-            if (fb == null) {res.send("invalid"); return}
+            
             var testOptions = {
               url: 'https://api.fitbit.com/1/user/-/activities/tracker/steps/date/today/1m.json',
               headers: {
@@ -93,8 +93,42 @@ var alerts = schedule.scheduleJob('0 0 0 * *', function() {
                   });
                 }
               }
+            });
+            
+            var testOptions = {
+              url: 'https://api.fitbit.com/1/user/-/activities/heart/date/today/1m.json',
+              headers: {
+                'Authorization': "Bearer" + " " + fb.access_token
+              }
+            };
+            request(testOptions, function(error,response,body){
+              if (!error && response.statusCode == 200) {
+                var heart = JSON.parse(body);
+
+                if (heart["activities-heart"][closestHeartRate].value.restingHeartRate > 80) {
+                  client.sms.messages.create({
+                      to: user.phone,
+                      from: TwilioKeys.from,
+                      body: itms[i].owner + "'s heart rate is concerningly high today."
+                  }, function(error, message) {
+                      if (error) {
+                        console.log("An error occcured while sending an SMS reminder.");
+                      }
+                  });
+                } else if (heart["activities-heart"][closestHeartRate].value.restingHeartRate < 50) {
+                    client.sms.messages.create({
+                        to: user.phone,
+                        from: TwilioKeys.from,
+                        body: itms[i].owner + "'s heart rate is concerningly low today."
+                    }, function(error, message) {
+                        if (error) {
+                          console.log("An error occcured while sending an SMS reminder.");
+                        }
+                    });
+                }
+              }
             })
-          })
+          });
         });
       }
     });
@@ -113,7 +147,7 @@ function sendReminders(itms) {
     });
   }
 }
-
+//
 app.use(Passport.initialize());
 app.use(Passport.session());
 

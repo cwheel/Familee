@@ -16,6 +16,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	$rootScope.heartrate = {};
 	$scope.mssg = "";
 	$scope.subs = {};
+	$scope.fname = "";
 
 	$http({
 	    method  : 'GET',
@@ -39,6 +40,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 
 	    if ($scope.devices.length > 0) {
 	    	$rootScope.selectedRow = $scope.devices[0].owner;
+	    	$scope.fname =  $rootScope.selectedRow.split(" ")[0];
 		}
 
 		$scope.update();
@@ -160,5 +162,6 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 		});
 
 		$scope.mssg = $scope.selectedRow;
+		$scope.fname =  $rootScope.selectedRow.split(" ")[0];
 	};
 }]);

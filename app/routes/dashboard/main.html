@@ -1,18 +1,38 @@
 <div class="anim-slide-right">
 	<div class="row" style="padding-top: 100;">
 		<div class="col-md-4"></div>
-		<div class="col-md-4" style="text-align: center; font-size: 20px; font-weight: 600;">{{ selectedRow }}'s Device</div>
+		<div class="col-md-4" style="text-align: center; font-size: 17px; font-weight: 600;">{{ selectedRow }}'s Device</div>
 		<div class="col-md-4"></div>
 	</div>
 	<i class="fa fa-battery-full"></i>
-	<div class="row" style="text-align: center; padding-top: 50;">
+	<div class="row" style="text-align: center; padding-top: 40;">
 		<div class="col-md-12">
 			<b>{{ battery }}</b> Charge&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			Fitbit <b>{{ model }}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			Last Synced At <b>{{ sync }}</b>
 		</div>
-		<div>
+	</div>
+	<div class="row" style="padding-top: 40px;">
+		<div class="col-md-4"></div>
+		<div class="col-md-4" style="text-align: center; font-size: 17px; font-weight: 600;">Body</div>
+		<div class="col-md-4"></div>
+	</div>
+	<div class="row" style="text-align: center; padding-top: 40;">
+		<div class="col-md-12">
 			Average Heart Rate Yesturday :<b> {{ Heartaverage }} </b>
+			</div>
+	</div>
+
+	<div class="row" style="padding-top: 40px;">
+		<div class="col-md-4"></div>
+		<div class="col-md-4" style="text-align: center; font-size: 17px; font-weight: 600;">Alerts</div>
+		<div class="col-md-4"></div>
+	</div>
+
+	<div class="row" style="text-align: center; padding-top: 40;">
+		<div class="col-md-12">
+			If {{fname}} doesn't walk for a whole day or takes under 100 steps<br>
+			If {{fname}}'s resting heart rate becomes concerningly high or low
 		</div>
 	</div>
 </div>

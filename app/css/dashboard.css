@@ -47,6 +47,7 @@
 .relative {
 	padding: 15px;
 	transition: all 0.5s;
+	border-bottom: solid 1px #d3d3d3;
 }
 
 .relative:hover {
@@ -56,6 +57,7 @@
 
 .relative-selected {
 	background: #FF8A65;
+	border-bottom: none;
 }
 
 #status-subtext {
