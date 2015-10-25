@@ -1,7 +1,7 @@
 var Passport = require('passport');
 var fs = require('fs');
 var grantConfig = JSON.parse(fs.readFileSync('./config/grant.json').toString());
-var request = require("request")
+var request = require("request");
 var User = require("./models/User"); 
 var Fitbit = require("./models/Fitbit"); 
 
@@ -20,12 +20,12 @@ module.exports = function(app) {
 	function reAuthFitbit(owner, res){
 		if (reauth) {
 			Fitbit.findOne({ owner: owner }, function (err, fb) {
-				console.log(fb)
+				console.log(fb);
 			var option = {
 				url: "https://api.fitbit.com/oauth2/token",
 				headers: {
 					'Authorization' : "Basic MjI5UkREOmFkZjk2N2Y4M2EyNGUyY2ViMWFjNjRlNGZjY2ExZDIw",
-					'Content-Type' : "application/x-www-form-urlencoded",
+					'Content-Type' : "application/x-www-form-urlencoded"
 				},
 				method: 'POST',
 				form: {
@@ -230,9 +230,124 @@ module.exports = function(app) {
 	    req.session.destroy();
 		req.logout();
 		res.redirect('/');
+		res.send("done");
 	});
-
+	app.get("/fitbit/sleep",function(req,res){
+		analyzeSleep(req.query.name,res)
+	})
+	app.get("/fitbit/heartrate",function(req,res){
+		Heartrate(req.query.name,res)
+	})
+	app.get("/fitbit/steps",function(req,res){
+		steps(req.query.name,res)
+	})
+	app.get("/refresh"),function(req,res){
+		reauth = true;
+		reAuthFitbit(req.name);
+		reauth = false
+	}
 	app.get("*", function(req, res) {
 	    res.redirect("/");
 	});
+
+	function analyzeSleep(name, res){
+		var sleep = {}
+		sleep.efavg = 100;
+		sleep.efdict = [];
+		sleep.asleepavg = 100;
+		sleep.asleepdict = [];
+		sleep.startdict = [];
+		Fitbit.findOne({ owner: name }, function (err, fb) {
+			var testOptions = {
+			  url: 'https://api.fitbit.com/1/user/-/sleep/efficiency/date/today/1w.json',
+			  headers: {
+			    'Authorization': "Bearer" + " " + fb.access_token
+			  }
+			};
+			request(testOptions, function(error,response,body){
+				if (!error && response.statusCode == 200) {
+					for(var i = 0; i < 7; i++){
+						if(JSON.parse(body)["sleep-efficiency"][i].value != 0){
+							sleep.efavg = ((parseInt(JSON.parse(body)["sleep-efficiency"][i].value) + sleep.efavg) / 2);
+							sleep.efdict.push(parseInt(JSON.parse(body)["sleep-efficiency"][i].value))
+						}
+					}
+					var testOptionstwo = {
+						  url: 'https://api.fitbit.com/1/user/-/sleep/minutesAsleep/date/today/1w.json',
+						  headers: {
+						    'Authorization': "Bearer" + " " + fb.access_token
+						  }
+						};
+						request(testOptionstwo, function(error,response,body){
+							console.log(JSON.parse(body));
+							//console.log(Object.keys(body))
+							if (!error && response.statusCode == 200) {
+								for(var i = 0; i < 7; i++){
+									if(JSON.parse(body)["sleep-minutesAsleep"][i].value != 0){
+										sleep.asleepavg = ((parseInt(JSON.parse(body)["sleep-minutesAsleep"][i].value) + sleep.asleepavg) / 2);
+										sleep.asleepdict.push(parseInt(JSON.parse(body)["sleep-minutesAsleep"][i].value))
+									}
+								}
+								var testOptionsthree = {
+								  url: 'https://api.fitbit.com/1/user/-/sleep/startTime/date/today/1w.json',
+								  headers: {
+								    'Authorization': "Bearer" + " " + fb.access_token
+								  }
+								};
+								request(testOptionsthree, function(error,response,body){
+									console.log(JSON.parse(body));
+									//console.log(Object.keys(body))
+									if (!error && response.statusCode == 200) {
+										for(var i = 0; i < 7; i++){
+											if(JSON.parse(body)["sleep-startTime"][i].value != 0){
+												sleep.startdict.push(parseInt(JSON.parse(body)["sleep-startTime"][i].value))
+											}
+										}
+										res.send(sleep);
+						  		 	} else {
+						  				res.send(body)
+						  			}
+								})
+
+				  		 	} else {
+				  				res.send(body)
+				  			}
+						})
+	  		 	} else {s
+	  				res.send(body)
+	  			}
+			})
+			
+		})
+	}
+	function Heartrate(name,res){
+		Fitbit.findOne({ owner: name }, function (err, fb) {
+			var testOptions = {
+			  url: 'https://api.fitbit.com/1/user/-/activities/heart/date/today/7d.json',
+			  headers: {
+			    'Authorization': "Bearer" + " " + fb.access_token
+			  }
+			};
+			request(testOptions, function(error,response,body){
+				if (!error && response.statusCode == 200) {
+					res.send(JSON.parse(body));
+				}
+			})
+		})
+	}
+	function steps(name,res){
+		Fitbit.findOne({ owner: name }, function (err, fb) {
+			var testOptions = {
+			  url: 'https://api.fitbit.com/1/user/-/activities/tracker/steps/date/today/7d.json',
+			  headers: {
+			    'Authorization': "Bearer" + " " + fb.access_token
+			  }
+			};
+			request(testOptions, function(error,response,body){
+				if (!error && response.statusCode == 200) {
+					res.send(JSON.parse(body));
+				}
+			})
+		})
+	}
 }
