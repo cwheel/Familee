@@ -1,4 +1,4 @@
-familee.controller('sickDashController', ['$scope', '$timeout', '$location', '$http', function($scope, $timeout, $location, $http) {
+familee.controller('sickDashController', ['$scope', '$timeout', '$location', '$http','$rootScope', function($scope, $timeout, $location, $http,$rootScope) {
 	var level = 0;
 	var count = 0;
 	for (var i = 0; i < $rootScope.steps['activities-tracker-steps'].length; i++) {
@@ -26,8 +26,8 @@ familee.controller('sickDashController', ['$scope', '$timeout', '$location', '$h
 		level += 1;
 		$scope.sleepMess = true;
 	}
-	count = 0
-	closestHeartRate
+	count = 0;
+	var closestHeartRate = 0;
 	if($rootScope.heartrate["activities-heart"] != undefined){
 		for(var i = 1; i < $rootScope.heartrate["activities-heart"].length;i++){
 			if("restingHeartRate" in $rootScope.heartrate["activities-heart"][i].value){
@@ -51,11 +51,11 @@ familee.controller('sickDashController', ['$scope', '$timeout', '$location', '$h
 
 	console.log(level);
 	if (level == 0 || level == 1){
-		$scope.smiley = "smile";
+		$scope.smiley = 0;
 	}else if (level == 2 || level == 3){
-		$scope.smiley = "neutral_face";
+		$scope.smiley = 1;
 	} else {
-		$scope.smiley = "frown";
+		$scope.smiley = 2;
 	}
 	console.log($scope.smiley)
 }]);

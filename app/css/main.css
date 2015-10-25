@@ -65,6 +65,22 @@
 	height: calc(100% - 200px);
 	width:100%;
 }
+.smile{
+	background-image: url('../res/smile.png');
+}
+.neutral{
+	background-image: url('../res/neutral_face.png');
+}
+.frown{
+	background-image: url('../res/frown.png');
+}
+.sickTitle{
+	font-size: 24;
+    font-weight: 300;
+}
+.subSickText{
+	font-size: 16;
+}
 
 body {
 	overflow: hidden;

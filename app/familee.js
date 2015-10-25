@@ -32,6 +32,6 @@ familee.config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
 	    .state('dashboard.sickness', {
 	      url: "/sickness",
 	      templateUrl: "routes/dashboard/sickness.html",
-	      controller: 'sleepDashController'
+	      controller: 'sickDashController'
 	    });
 }]);
