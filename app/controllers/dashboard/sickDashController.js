@@ -37,11 +37,11 @@ familee.controller('sickDashController', ['$scope', '$timeout', '$location', '$h
 			}
 		}
 	}
-	if( count > 2){
+	if( count == 1){
 		$scopeAverageRestHeartRate = $scope.Heartaverage / count;
 		$scope.HeartMess = false;
 		$scope.HeartData = true;
-		if ($scopeAverageRestHeartRate < $rootScope.heartrate["activities-heart"][closestHeartRate].value.restingHeartRate){
+		if (80 < $rootScope.heartrate["activities-heart"][closestHeartRate].value.restingHeartRate){
 			level += 2;
 			$scope.HeartMess = true
 		}
