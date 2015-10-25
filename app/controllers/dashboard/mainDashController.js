@@ -7,8 +7,8 @@ familee.controller('mainDashController', ['$scope', '$timeout', '$location', '$h
 
 	$scope.battery = $rootScope.devices.battery;
 	$scope.model = $rootScope.devices.deviceVersion;
-	$scope.sync = $rootScope.devices.lastSyncTime;
-
+	$scope.sync =  moment($rootScope.devices.lastSyncTime).format('MMMM Do YYYY, h:mm:ss a');
+	
 	if($rootScope.heartrate["activities-heart"] != undefined){
 		if("restingHeartRate" in $rootScope.heartrate["activities-heart"][0].value){
 			$scope.average = parseInt($rootScope.heartrate["activities-heart"][0].value.restingHeartRate)
