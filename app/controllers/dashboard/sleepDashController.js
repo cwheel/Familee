@@ -1,18 +1,13 @@
 familee.controller('sleepDashController', ['$scope', '$timeout', '$location', '$http', '$rootScope', function($scope, $timeout, $location, $http, $rootScope) {
-		$http({
-			method: 'GET',
-			url: '/fitbit/steps',
-			data: {name: $rootScope.selectedRow, }
-		}).success (function(response){
-			console.log(response)
-		});
+	$scope.data = []
+	console.log($rootScope.sleep.asleepdict)
+	for (var i = 0; i < $rootScope.sleep.asleepdict.length; i++) {
+		$scope.data[i] = $rootScope.sleep.asleepdict[i].value
+	};
+	$scope.series = ['Steps Per Day'];
+	$scope.labels = [];
 
-	$scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-	  $scope.series = ['Series A', 'Series B'];
-	  $scope.data = [
-	    [65, 59, 80, 81, 56, 55, 40],
-	    [28, 48, 40, 19, 86, 27, 90]
-	  ];
+	console.log($scope.data)
 	  $scope.onClick = function (points, evt) {
 	    console.log(points, evt);
 	  };
