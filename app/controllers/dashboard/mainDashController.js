@@ -29,16 +29,21 @@ familee.controller('mainDashController', ['$scope', '$timeout', '$location', '$h
 	$scope.battery = $rootScope.devices.battery;
 	$scope.model = $rootScope.devices.deviceVersion;
 	$scope.sync =  moment($rootScope.devices.lastSyncTime).format('MMMM Do YYYY, h:mm:ss a');
-	
+	var count = 0;
 	if($rootScope.heartrate["activities-heart"] != undefined){
-		if("restingHeartRate" in $rootScope.heartrate["activities-heart"][0].value){
-			$scope.average = parseInt($rootScope.heartrate["activities-heart"][0].value.restingHeartRate)
-			for(var i = 1; i < $rootScope.heartrate["activities-heart"].length;i++){
-				$scope.average = ($scope.average + parseInt($rootScope.heartrate["activities-heart"][0].value.restingHeartRate)) / 2
+		for(var i = 1; i < $rootScope.heartrate["activities-heart"].length;i++){
+			if("restingHeartRate" in $rootScope.heartrate["activities-heart"][i].value){
+				$scope.Heartaverage += parseInt($rootScope.heartrate["activities-heart"][i].value.restingHeartRate);
+				count += 1;
+				closestHeartRate = i;
 			}
-			console.log($scope.average)
-		}else{
-			$scope.average = "No Heart Rate Data"
+		}
+	}
+	if( count > 1){
+		$scope.AverageRestHeartRate = $scope.Heartaverage / count;
+		$scope.HeartMess = false;
+		$scope.HeartData = true;
+		if (80 < $rootScope.heartrate["activities-heart"][closestHeartRate].value.restingHeartRate){
 		}
 	}
 }]);
