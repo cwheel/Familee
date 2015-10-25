@@ -14,6 +14,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	$rootScope.sleep = {};
 	$rootScope.steps = {};
 	$rootScope.heartrate = {};
+	$scope.mssg = "";
 	
 	$http({
 	    method  : 'GET',
@@ -106,10 +107,6 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	};
 
 	$scope.update = function() {
-		/////////////////////////////////
-		//All the data from the server//
-		////////////////////////////////
-
 		$http({
 		    method  : 'GET',
 		    url     : '/fitbit/getDevices',
@@ -154,8 +151,6 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 			}
 		});
 
-		////////
-		//End//
-		///////
+		$scope.mssg = $scope.selectedRow;
 	};
 }]);
