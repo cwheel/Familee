@@ -4,18 +4,12 @@
 		<div class="col-md-4" style="text-align: center; font-size: 20px; font-weight: 600;">{{ selectedRow }}'s Device</div>
 		<div class="col-md-4"></div>
 	</div>
+	<i class="fa fa-battery-full"></i>
 	<div class="row" style="text-align: center; padding-top: 50;">
-		<div class="col-md-1"></div>
-		<div class="col-md-3">
-			{{ battery }} Charge
-		</div>
-		
-		<div class="col-md-3">
-			Fitbit {{ model }}
-		</div>
-
-		<div class="col-md-3">
-			Last Synced At {{ sync }}
+		<div class="col-md-12">
+			<b>{{ battery }}</b> Charge&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			Fitbit <b>{{ model }}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			Last Synced At <b>{{ sync }}</b>
 		</div>
 	</div>
 </div>

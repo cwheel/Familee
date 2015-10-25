@@ -115,6 +115,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 		.success(function(resp) {
 			if (resp != "invalid") {
 				$rootScope.devices = angular.fromJson(resp)[0];
+				$rootScope.$broadcast('devices');
 			}
 		});
 
