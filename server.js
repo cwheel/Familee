@@ -15,9 +15,9 @@ var User = require("./models/User");
 var app = express();
 var schedule = require('node-schedule');
 var Reminder = require("./models/Reminder"); 
-var TwilioKeys = require("./models/twilioKeys");
+var TwilioKeys = require("./twilioKeys");
 
-var client = new twilio.RestClient(TwilioKeys.sid, TwilioKeys.tokens);
+var client = new Twilio.RestClient(TwilioKeys.sid, TwilioKeys.tokens);
 
 mongoose.connect('mongodb://localhost/familee');
 
@@ -58,7 +58,7 @@ var night = schedule.scheduleJob('0 0 18 * *', function(err, itms) {
 function sendReminders(itms) {
   for (var i = 0; i < itms.length; i++) {
     client.sms.messages.create({
-        to: itms[i].phone
+        to: itms[i].phone,
         from: TwilioKeys.from,
         body: itms[i].mssg
     }, function(error, message) {

@@ -111,7 +111,7 @@ module.exports = function(app) {
 
 		reAuthFitbit(req.query.name, res)
 		Fitbit.findOne({ owner: req.query.name }, function (err, fb) {
-			if (fb == null) res.send("invalid") 
+			if (fb == null) {res.send("invalid"); return}
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/devices.json',
 			  headers: {
@@ -284,6 +284,7 @@ module.exports = function(app) {
 		sleep.asleepdict = [];
 		sleep.startdict = [];
 		Fitbit.findOne({ owner: name }, function (err, fb) {
+			if (fb == null) {res.send("invalid"); return}
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/sleep/efficiency/date/today/1w.json',
 			  headers: {
@@ -339,7 +340,7 @@ module.exports = function(app) {
 				  				res.send(body)
 				  			}
 						})
-	  		 	} else {s
+	  		 	} else {
 	  				res.send(body)
 	  			}
 			})
@@ -348,6 +349,7 @@ module.exports = function(app) {
 	}
 	function Heartrate(name,res){
 		Fitbit.findOne({ owner: name }, function (err, fb) {
+			if (fb == null) {res.send("invalid"); return}
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/activities/heart/date/today/7d.json',
 			  headers: {
@@ -363,6 +365,7 @@ module.exports = function(app) {
 	}
 	function steps(name,res){
 		Fitbit.findOne({ owner: name }, function (err, fb) {
+			if (fb == null) {res.send("invalid"); return}
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/activities/tracker/steps/date/today/7d.json',
 			  headers: {
