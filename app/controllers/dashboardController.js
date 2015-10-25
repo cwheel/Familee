@@ -113,6 +113,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 		    params  : {name: $rootScope.selectedRow}
 		})
 		.success(function(resp) {
+			console.log(resp);
 			if (resp != "invalid") {
 				$rootScope.devices = angular.fromJson(resp)[0];
 				$rootScope.$broadcast('devices');

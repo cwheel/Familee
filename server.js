@@ -21,7 +21,7 @@ var client = new Twilio.RestClient(TwilioKeys.sid, TwilioKeys.tokens);
 
 mongoose.connect('mongodb://localhost/familee');
 
-User({name: "Cameron Wheeler", pass: "$2a$10$u5Gpzryz5/9xIrsL6pu6resMIltqp/5grI516724ErZDhKzdkVabC", "user" : "test"}).save();
+User({name: "Cameron Wheeler", pass: "$2a$10$u5Gpzryz5/9xIrsL6pu6resMIltqp/5grI516724ErZDhKzdkVabC", "user" : "test", "phone" : "1234123123"}).save();
 
 app.use(session({secret:'grant'}))
 app.use(grant)
@@ -52,6 +52,51 @@ var noon = schedule.scheduleJob('0 0 12 * *', function(err, itms) {
 var night = schedule.scheduleJob('0 0 18 * *', function(err, itms) {
     Reminder.find({block : "night"}, function () {
       sendReminders(itms);
+    });
+});
+
+var alerts = schedule.scheduleJob('0 0 0 * *', function() {
+    Fitbit.find({}, function (err, itms) {
+      for (var i = 0; i < itms.length; i++) {
+        Fitbit.findOne({username : itms[i].username}, function (err, user) {
+          Fitbit.findOne({ owner: name }, function (err, fb) {
+            if (fb == null) {res.send("invalid"); return}
+            var testOptions = {
+              url: 'https://api.fitbit.com/1/user/-/activities/tracker/steps/date/today/1m.json',
+              headers: {
+                'Authorization': "Bearer" + " " + fb.access_token
+              }
+            };
+            request(testOptions, function(error,response,body){
+              if (!error && response.statusCode == 200) {
+                var steps = JSON.parse(body)['activities-tracker-steps'];
+
+                if (steps[29] == 0) {
+                  client.sms.messages.create({
+                      to: user.phone,
+                      from: TwilioKeys.from,
+                      body: itms[i].owner + " either forgot their Fitbit today or has not walked."
+                  }, function(error, message) {
+                      if (error) {
+                        console.log("An error occcured while sending an SMS reminder.");
+                      }
+                  });
+                } else if (steps[29] < 100) {
+                  client.sms.messages.create({
+                      to: user.phone,
+                      from: TwilioKeys.from,
+                      body: itms[i].owner + " has walked under 100 steps today."
+                  }, function(error, message) {
+                      if (error) {
+                        console.log("An error occcured while sending an SMS reminder.");
+                      }
+                  });
+                }
+              }
+            })
+          })
+        });
+      }
     });
 });
 
