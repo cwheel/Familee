@@ -22,6 +22,8 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	.success(function(resp) {
 	    if (resp != "valid_auth") {
 	      	$state.go("login");
+	    }else {
+	    	$state.go("dashboard.main");
 	    }
 	});
 
