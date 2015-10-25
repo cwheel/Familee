@@ -10,12 +10,18 @@ var Passport = require('passport');
 var mongoose = require('mongoose');
 var LocalStrategy = require('passport-local').Strategy;
 var Bcrypt = require('bcrypt');
+var Twilio = require('twilio');
 var User = require("./models/User");
 var app = express();
+var schedule = require('node-schedule');
+var Reminder = require("./models/Reminder"); 
+var TwilioKeys = require("./models/twilioKeys");
+
+var client = new twilio.RestClient(TwilioKeys.sid, TwilioKeys.tokens);
 
 mongoose.connect('mongodb://localhost/familee');
 
-//User({name: "Cameron Wheeler", pass: "$2a$10$u5Gpzryz5/9xIrsL6pu6resMIltqp/5grI516724ErZDhKzdkVabC", "user" : "test"}).save();
+User({name: "Cameron Wheeler", pass: "$2a$10$u5Gpzryz5/9xIrsL6pu6resMIltqp/5grI516724ErZDhKzdkVabC", "user" : "test"}).save();
 
 app.use(session({secret:'grant'}))
 app.use(grant)
@@ -30,6 +36,38 @@ app.use(session({
   saveUninitialized: true, 
   resave: true
 }));
+
+var morning = schedule.scheduleJob('0 0 7 * *', function() {
+  Reminder.find({block : "morning"}, function (err, itms) {
+    sendReminders(itms);
+  });
+});
+
+var noon = schedule.scheduleJob('0 0 12 * *', function(err, itms) {
+    Reminder.find({block : "noon"}, function () {
+      sendReminders(itms);
+    });
+});
+
+var night = schedule.scheduleJob('0 0 18 * *', function(err, itms) {
+    Reminder.find({block : "night"}, function () {
+      sendReminders(itms);
+    });
+});
+
+function sendReminders(itms) {
+  for (var i = 0; i < itms.length; i++) {
+    client.sms.messages.create({
+        to: itms[i].phone
+        from: TwilioKeys.from,
+        body: itms[i].mssg
+    }, function(error, message) {
+        if (error) {
+          console.log("An error occcured while sending an SMS reminder.");
+        }
+    });
+  }
+}
 
 app.use(Passport.initialize());
 app.use(Passport.session());

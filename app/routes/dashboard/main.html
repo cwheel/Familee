@@ -1,5 +1,21 @@
 <div class="anim-slide-right">
-	<div >
-	views are kule
+	<div class="row" style="padding-top: 100;">
+		<div class="col-md-4"></div>
+		<div class="col-md-4" style="text-align: center; font-size: 20px; font-weight: 600;">{{ selectedRow }}'s Device</div>
+		<div class="col-md-4"></div>
+	</div>
+	<div class="row" style="text-align: center; padding-top: 50;">
+		<div class="col-md-1"></div>
+		<div class="col-md-3">
+			{{ battery }} Charge
+		</div>
+		
+		<div class="col-md-3">
+			Fitbit {{ model }}
+		</div>
+
+		<div class="col-md-3">
+			Last Synced At {{ sync }}
+		</div>
 	</div>
 </div>

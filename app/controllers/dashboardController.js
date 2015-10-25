@@ -7,6 +7,9 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	$scope.devices = [];
 	$rootScope.selectedRow = "";
 	$scope.currentTab = "Overview";
+	$scope.addReminder2 = false;
+	$scope.addReminder1 = true;
+	$scope.newReminder = {phone : "", mssg : "", block : ""}
 	//$state.go('dashboard.main');
 
 	$http({
@@ -32,18 +35,6 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 		}
 	});
 
-	/*$http({
-			    method  : 'GET',
-			    url     : '/fitbit/getDevices',
-			    params  : {name: $scope.devices[i].owner}
-			})
-			.success(function(resp) {
-			    var dev = angular.fromJson(resp)[0];
-			    $scope.devices[i].battery = dev.battery;
-			    $scope.devices[i].deviceVersion = dev.deviceVersion;
-			    $scope.devices[i].lastSyncTime = dev.lastSyncTime;
-			});*/
-
 	$http({
 	    method  : 'GET',
 	    url     : '/userinfo',
@@ -52,6 +43,26 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	    var resItems = angular.fromJson(resp);
 	    $scope.fullname = resItems.name;
 	});
+
+	$scope.nextAddReminder =  function() {
+		if ($scope.addReminder2 == false) {
+			$scope.addReminder2 = true;
+			$scope.addReminder1 = false;
+		} else {
+			$http({
+			    method  : 'POST',
+			    url     : '/addReminder',
+			      data    : $.param({phone : $scope.newReminder.phone, mssg : $scope.newReminder.mssg, block : $scope.newReminder.block}),
+			    headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+			})
+			.success(function(resp) {
+			    if (resp == "valid_auth") {
+			      	$state.go("dashboard");
+			    }
+			})
+			$("#addReminder").modal('hide');
+		}
+	};
 
 	$scope.chooseDevice = function (device) {
 		$scope.addRelative1 = false;

@@ -4,6 +4,7 @@
   </div>
 
   <ul class="nav navbar-nav outlineless" style="float: right;">
+  <li material-ripple><a class="link" href="#" data-toggle="modal" data-target="#addReminder" style="outline: 0">Medication Reminders</a></li>
     <li material-ripple><a class="link" href="#" data-toggle="modal" data-target="#addRelative" style="outline: 0">New Family Member</a></li>
     <li class="dropdown" material-ripple>
       <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><b>{{ fullname }}</b> <b class="caret"></b></a>
@@ -80,6 +81,46 @@
 
       <div class="modal-footer">
         <button id="nextButton" type="button" class="btn btn-primary" ng-show="showRelativeNext" ng-click="next()" style="margin: 10;">Next</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="addReminder" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">A Friendly Reminder</h4>
+      </div>
+      <div class="modal-body " ng-show="addReminder1">
+          <p>Familee offers a lightweight way to remind the ones you care for about their medications. Text messages featuring personal messages written by you can be sent at specified times of the day.</p> 
+      </div>
+
+      <div id="secondaryAddMessage" class="modal-body " ng-show="addReminder2">
+       <div class="form-group">
+         <textarea type="text" placeholder="Message" class="form-control floating-label" ng-model="newReminder.mssg" material-input style="padding-top: 50px; margin-top: 10px"/>
+       </div>
+
+       <div class="form-group">
+         <input type="text" placeholder="Phone Number" ng-model="newReminder.phone" class="form-control floating-label" material-input/>
+       </div>
+
+        <div class="form-group">
+          <div class="dropdown" style="width: 100%">
+            <button style="width:100%" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Time Of Day<span class="caret"></span></button>
+            <ul class="dropdown-menu" style="width:100%">
+              <li ng-click="newReminder.block = 'morning'"><a href="#">Morning (7:00 AM)</a></li>
+              <li ng-click="newReminder.block = 'noon'"><a href="#">Noon (12:00 PM)</a></li>
+              <li ng-click="newReminder.block = 'evening'"><a href="#">Evening (6:00 PM)</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="nextButton" type="button" class="btn btn-primary" ng-click="nextAddReminder()" style="margin: 10;">Next</button>
       </div>
     </div>
 

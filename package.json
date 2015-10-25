@@ -19,7 +19,8 @@
 		"grunt-contrib-sass": "latest",
 		"twilio": "latest",
 		"mongoose": "latest",
-		"bcrypt": "latest"
+		"bcrypt": "latest",
+		"node-schedule": "latest"
 	},
 	"repository": {}
 }

@@ -4,11 +4,13 @@ var grantConfig = JSON.parse(fs.readFileSync('./config/grant.json').toString());
 var request = require("request")
 var User = require("./models/User"); 
 var Fitbit = require("./models/Fitbit"); 
+var Reminder = require("./models/Reminder"); 
 
 module.exports = function(app) {
 	var reauth = false;
 
 	var fitbitAccess_token = null;
+
 	function requireAuth(req, res, next) {
 		if (req.isAuthenticated()) {
 	    	return next();
@@ -20,7 +22,6 @@ module.exports = function(app) {
 	function reAuthFitbit(owner, res){
 		if (reauth) {
 			Fitbit.findOne({ owner: owner }, function (err, fb) {
-				console.log(fb)
 			var option = {
 				url: "https://api.fitbit.com/oauth2/token",
 				headers: {
@@ -84,8 +85,11 @@ module.exports = function(app) {
 	});
 
 	app.get("/fitbit/getProfile", requireAuth, function(req,res){
+		if (req.query.name == null) res.send("invalid")
+
 		reAuthFitbit(req.query.name, res)
 		Fitbit.findOne({ owner: req.query.name }, function (err, fb) {
+			if (fb == null) res.send("invalid") 
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/profile.json',
 			  headers: {
@@ -103,8 +107,11 @@ module.exports = function(app) {
 	})
 
 	app.get("/fitbit/getDevices", requireAuth, function(req,res){
+		if (req.query.name == null) res.send("invalid")
+
 		reAuthFitbit(req.query.name, res)
 		Fitbit.findOne({ owner: req.query.name }, function (err, fb) {
+			if (fb == null) res.send("invalid") 
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/devices.json',
 			  headers: {
@@ -122,8 +129,11 @@ module.exports = function(app) {
 	})
 
 	app.get("/fitbit/heartrate/getDay", requireAuth, function(req,res){
+		if (req.query.name == null) res.send("invalid")
+
 		reAuthFitbit(req.query.name, res)
 		Fitbit.findOne({ owner: req.query.name }, function (err, fb) {
+			if (fb == null) res.send("invalid") 
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/activities/heart/date/' + req.query.date +' /1d.json',
 			  headers: {
@@ -141,8 +151,11 @@ module.exports = function(app) {
 	})
 
 	app.get("/fitbit/heartrate/getWeek", requireAuth, function(req,res){
+		if (req.query.name == null) res.send("invalid")
+
 		reAuthFitbit(req.query.name, res)
 		Fitbit.findOne({ owner: req.query.name }, function (err, fb) {
+			if (fb == null) res.send("invalid") 
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/activities/heart/date/' + req.query.date +' /1w.json',
 			  headers: {
@@ -160,8 +173,11 @@ module.exports = function(app) {
 	})
 
 	app.get("/fitbit/heartrate/getMonth", requireAuth, function(req,res){
+		if (req.query.name == null) res.send("invalid")
+
 		reAuthFitbit(req.query.name, res)
 		Fitbit.findOne({ owner: req.query.name }, function (err, fb) {
+			if (fb == null) res.send("invalid") 
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/activities/heart/date/' + req.query.date +' /1m.json',
 			  headers: {
@@ -179,8 +195,11 @@ module.exports = function(app) {
 	})
 
 	app.get("/fitbit/heartrate/getRange", requireAuth, function(req,res){
+		if (req.query.name == null) res.send("invalid")
+
 		reAuthFitbit(req.query.name, res)
 		Fitbit.findOne({ owner: req.query.name }, function (err, fb) {
+			if (fb == null) res.send("invalid") 
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/activities/heart/date/' + req.query.start +'/' + req.query.end +'.json',
 			  headers: {
@@ -197,8 +216,11 @@ module.exports = function(app) {
 		})
 	})
 	app.get("/fitbit/getSleep", requireAuth, function(req,res){
+		if (req.query.name == null) res.send("invalid")
+
 		reAuthFitbit(req.query.name, res)
 			Fitbit.findOne({ owner: req.query.name }, function (err, fb) {
+			if (fb == null) res.send("invalid") 
 			var testOptions = {
 			  url: 'https://api.fitbit.com/1/user/-/sleep/date/' + req.query.date + '.json',
 			  headers: {
@@ -224,6 +246,10 @@ module.exports = function(app) {
 
 	app.get("/userinfo", requireAuth, function(req, res) {
 	    res.send({name : req.user.name});
+	});
+
+	app.post("/addReminder", requireAuth, function(req, res) {
+	    Reminder(req.body).save();
 	});
 
 	app.get("/logout", requireAuth, function(req, res) {
