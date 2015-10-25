@@ -1,6 +1,19 @@
 <div class="anim-slide-right" >
-
-<div>
-views are kule
-</div>
+	<div>{{smiley}}</div>
+	<div class="col-md-4">
+		<div>Heart:</div>
+		<div ng-if="!HeartData">No Heart Rate Data</div>
+		<div ng-if="!HeartMess && HeartData">Heart Rate Appears to Be Normal</div>
+		<div ng-if="HeartMess && HeartData">Your Heart Rate is above your average</div>
+	</div>
+	<div class="col-md-4">
+		<div>Movement:</div>
+		<div ng-if="stepMess"> You seemed to have walked around less than on a normal day</div>
+		<div ng-if="!stepMess"> Your stepcount seems to be appropriate</div>
+	</div>
+	<div class="col-md-4">
+		<div>Sleep:</div>
+		<div ng-if="sleepMess"> You seemed to have slept more today than you do on average </div>
+		<div ng-if="!sleepMess"> Your sleep amount seems appropriate</div>
+	</div>
 </div>
