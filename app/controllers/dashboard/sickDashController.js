@@ -26,7 +26,7 @@ familee.controller('sickDashController', ['$scope', '$timeout', '$location', '$h
 		level += 1;
 		$scope.sleepMess = true;
 	}
-	count = 0;
+	var count = 0;
 	var closestHeartRate = 0;
 	if($rootScope.heartrate["activities-heart"] != undefined){
 		for(var i = 1; i < $rootScope.heartrate["activities-heart"].length;i++){

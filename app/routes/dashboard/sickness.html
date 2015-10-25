@@ -1,19 +1,19 @@
-<div class="anim-slide-right" >
+<div class="anim-slide-right" style="text-align:center">
 	<div class="smile" ng-class="{'neutral': smiley == 1, 'frown': smiley == 2}" style="height:150px;width:150px;background-size:cover;margin:auto"></div>
 	<div class="col-md-4">
 		<div class="sickTitle">Heart:</div>
 		<div class="subSickText" ng-if="!HeartData">No Heart Rate Data</div>
 		<div class="subSickText"ng-if="!HeartMess && HeartData">Heart Rate Appears to Be Normal</div>
-		<div class="subSickText"ng-if="HeartMess && HeartData">Your Relative Heart Rate is above your average</div>
+		<div class="subSickText"ng-if="HeartMess && HeartData">  Heart Rate is above average</div>
 	</div>
 	<div class="col-md-4">
 		<div class="sickTitle">Movement:</div>
-		<div class="subSickText"ng-if="stepMess"> Your Relative seemed to have walked around less than on a normal day</div>
-		<div class="subSickText"ng-if="!stepMess"> Your Relative stepcount seems to be appropriate</div>
+		<div class="subSickText"ng-if="stepMess">  Relative seemed to have walked around less than on a normal day</div>
+		<div class="subSickText"ng-if="!stepMess"> Relative stepcount seems to be appropriate</div>
 	</div>
 	<div class="col-md-4">
 		<div class="sickTitle">Sleep:</div>
-		<div class="subSickText"ng-if="sleepMess"> Your Relative seemed to have slept more today than you do on average </div>
-		<div class="subSickText"ng-if="!sleepMess"> Your Relative sleep level seems appropriate</div>
+		<div class="subSickText"ng-if="sleepMess">  Relative seemed to have slept more today than you do on average </div>
+		<div class="subSickText"ng-if="!sleepMess">  Relative sleep level seems appropriate</div>
 	</div>
 </div>

@@ -149,6 +149,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 		.success(function(resp) {
 			if (resp != "invalid") {
 				$rootScope.heartrate = angular.fromJson(resp);
+				$rootScope.$broadcast('heartrate');
 			}
 		});
 
