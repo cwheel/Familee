@@ -15,7 +15,8 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	$rootScope.steps = {};
 	$rootScope.heartrate = {};
 	$scope.mssg = "";
-	
+	$scope.subs = {};
+
 	$http({
 	    method  : 'GET',
 	    url     : '/authstatus',
@@ -51,6 +52,10 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	    var resItems = angular.fromJson(resp);
 	    $scope.fullname = resItems.name;
 	});
+
+	$scope.bday = function(bd) {
+		return moment().format("MMMM Do YYYY");
+	}
 
 	$scope.nextAddReminder =  function() {
 		if ($scope.addReminder2 == false) {

@@ -72,11 +72,9 @@ module.exports = function(app) {
 		};
 		request(testOptions, function(error,response,body) {
 			if (!error && response.statusCode == 200) {
-				var relName = JSON.parse(body).user.fullName;
+				var b = JSON.parse(body);
 
-				console.log("here" + relName);
-
-				Fitbit({access_token: req.query.access_token, refresh_token: req.query.refresh_token, owner: relName, username: req.user.user}).save();
+				Fitbit({access_token: req.query.access_token, refresh_token: req.query.refresh_token, owner: b.user.fullName, username: req.user.user, gender: b.user.gender, dob: b.user.dateOfBirth}).save();
 				res.sendfile("app/routes/oauth_bounce.html")
   			} else {
   				res.send(body);

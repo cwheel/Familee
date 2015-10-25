@@ -21,7 +21,7 @@
       <div class="row relative" ng-class="{'relative-selected': selectedRow == device.owner}" ng-click="selectRow(device.owner)">
         {{device.owner}}
         <br>
-        <div class="subtext">{{device.lastSyncTime}}</div>
+        <div class="subtext">{{bday(device.dob)}}</div>
       </div>
     </div>
 	</div>

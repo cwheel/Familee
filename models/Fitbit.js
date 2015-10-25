@@ -4,5 +4,7 @@ module.exports = mongoose.model('Fitbit', {
     owner : {type : String, default: ''},
     access_token : {type : String, default: ''},
     refresh_token : {type : String, default: ''},
-    username : {type : String, default: ''}
+    username : {type : String, default: ''},
+    gender: {type : String, default: ''},
+    dob: {type : String, default: ''},
 });
