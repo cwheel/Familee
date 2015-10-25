@@ -286,21 +286,21 @@ module.exports = function(app) {
 		Fitbit.findOne({ owner: name }, function (err, fb) {
 			if (fb == null) {res.send("invalid"); return}
 			var testOptions = {
-			  url: 'https://api.fitbit.com/1/user/-/sleep/efficiency/date/today/1w.json',
+			  url: 'https://api.fitbit.com/1/user/-/sleep/efficiency/date/today/1m.json',
 			  headers: {
 			    'Authorization': "Bearer" + " " + fb.access_token
 			  }
 			};
 			request(testOptions, function(error,response,body){
 				if (!error && response.statusCode == 200) {
-					for(var i = 0; i < 7; i++){
+					for(var i = 0; i < 28; i++){
 						if(JSON.parse(body)["sleep-efficiency"][i].value != 0){
 							sleep.efavg = ((parseInt(JSON.parse(body)["sleep-efficiency"][i].value) + sleep.efavg) / 2);
-							sleep.efdict.push(parseInt(JSON.parse(body)["sleep-efficiency"][i].value))
 						}
+						sleep.efdict = JSON.parse(body)["sleep-efficiency"];
 					}
 					var testOptionstwo = {
-						  url: 'https://api.fitbit.com/1/user/-/sleep/minutesAsleep/date/today/1w.json',
+						  url: 'https://api.fitbit.com/1/user/-/sleep/minutesAsleep/date/today/1m.json',
 						  headers: {
 						    'Authorization': "Bearer" + " " + fb.access_token
 						  }
@@ -309,14 +309,14 @@ module.exports = function(app) {
 							console.log(JSON.parse(body));
 							//console.log(Object.keys(body))
 							if (!error && response.statusCode == 200) {
-								for(var i = 0; i < 7; i++){
+								for(var i = 0; i < 28; i++){
 									if(JSON.parse(body)["sleep-minutesAsleep"][i].value != 0){
 										sleep.asleepavg = ((parseInt(JSON.parse(body)["sleep-minutesAsleep"][i].value) + sleep.asleepavg) / 2);
-										sleep.asleepdict.push(parseInt(JSON.parse(body)["sleep-minutesAsleep"][i].value))
 									}
+									sleep.asleepdict = JSON.parse(body)["sleep-minutesAsleep"];
 								}
 								var testOptionsthree = {
-								  url: 'https://api.fitbit.com/1/user/-/sleep/startTime/date/today/1w.json',
+								  url: 'https://api.fitbit.com/1/user/-/sleep/startTime/date/today/1m.json',
 								  headers: {
 								    'Authorization': "Bearer" + " " + fb.access_token
 								  }
@@ -325,11 +325,7 @@ module.exports = function(app) {
 									console.log(JSON.parse(body));
 									//console.log(Object.keys(body))
 									if (!error && response.statusCode == 200) {
-										for(var i = 0; i < 7; i++){
-											if(JSON.parse(body)["sleep-startTime"][i].value != 0){
-												sleep.startdict.push(parseInt(JSON.parse(body)["sleep-startTime"][i].value))
-											}
-										}
+										sleep.startdict = JSON.parse(body)["sleep-startTime"];
 										res.send(sleep);
 						  		 	} else {
 						  				res.send(body)
@@ -351,7 +347,7 @@ module.exports = function(app) {
 		Fitbit.findOne({ owner: name }, function (err, fb) {
 			if (fb == null) {res.send("invalid"); return}
 			var testOptions = {
-			  url: 'https://api.fitbit.com/1/user/-/activities/heart/date/today/7d.json',
+			  url: 'https://api.fitbit.com/1/user/-/activities/heart/date/today/1m.json',
 			  headers: {
 			    'Authorization': "Bearer" + " " + fb.access_token
 			  }
@@ -367,7 +363,7 @@ module.exports = function(app) {
 		Fitbit.findOne({ owner: name }, function (err, fb) {
 			if (fb == null) {res.send("invalid"); return}
 			var testOptions = {
-			  url: 'https://api.fitbit.com/1/user/-/activities/tracker/steps/date/today/7d.json',
+			  url: 'https://api.fitbit.com/1/user/-/activities/tracker/steps/date/today/1m.json',
 			  headers: {
 			    'Authorization': "Bearer" + " " + fb.access_token
 			  }
