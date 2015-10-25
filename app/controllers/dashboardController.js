@@ -25,58 +25,6 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	    }
 	});
 
-	/////////////////////////////////
-	//All the data from the server//
-	////////////////////////////////
-
-	$http({
-	    method  : 'GET',
-	    url     : '/fitbit/getDevices',
-	    params  : {name: $rootScope.selectedRow}
-	})
-	.success(function(resp) {
-		if (resp != "invalid") {
-			$rootScope.devices = angular.fromJson(resp)[0];
-		}
-	});
-
-	$http({
-	    method  : 'GET',
-	    url     : '/fitbit/sleep',
-	    params  : {name: $rootScope.selectedRow}
-	})
-	.success(function(resp) {
-		if (resp != "invalid") {
-			$rootScope.sleep = angular.fromJson(resp)[0];
-		}
-	});
-
-	$http({
-	    method  : 'GET',
-	    url     : '/fitbit/steps',
-	    params  : {name: $rootScope.selectedRow}
-	})
-	.success(function(resp) {
-		if (resp != "invalid") {
-			$rootScope.steps = angular.fromJson(resp)[0];
-		}
-	});
-
-	$http({
-	    method  : 'GET',
-	    url     : '/fitbit/heartrate',
-	    params  : {name: $rootScope.selectedRow}
-	})
-	.success(function(resp) {
-		if (resp != "invalid") {
-			$rootScope.steps = angular.fromJson(resp)[0];
-		}
-	});
-
-	////////
-	//End//
-	///////
-
 	$http({
 	    method  : 'GET',
 	    url     : '/userinfo/devices',
@@ -88,6 +36,58 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	    if ($scope.devices.length > 0) {
 	    	$rootScope.selectedRow = $scope.devices[0].owner;
 		}
+
+		/////////////////////////////////
+		//All the data from the server//
+		////////////////////////////////
+
+		$http({
+		    method  : 'GET',
+		    url     : '/fitbit/getDevices',
+		    params  : {name: $rootScope.selectedRow}
+		})
+		.success(function(resp) {
+			if (resp != "invalid") {
+				$rootScope.devices = angular.fromJson(resp)[0];
+			}
+		});
+
+		$http({
+		    method  : 'GET',
+		    url     : '/fitbit/sleep',
+		    params  : {name: $rootScope.selectedRow}
+		})
+		.success(function(resp) {
+			if (resp != "invalid") {
+				$rootScope.sleep = angular.fromJson(resp);
+			}
+		});
+
+		$http({
+		    method  : 'GET',
+		    url     : '/fitbit/steps',
+		    params  : {name: $rootScope.selectedRow}
+		})
+		.success(function(resp) {
+			if (resp != "invalid") {
+				$rootScope.steps = angular.fromJson(resp);
+			}
+		});
+
+		$http({
+		    method  : 'GET',
+		    url     : '/fitbit/heartrate',
+		    params  : {name: $rootScope.selectedRow}
+		})
+		.success(function(resp) {
+			if (resp != "invalid") {
+				$rootScope.heartrate = angular.fromJson(resp);
+			}
+		});
+
+		////////
+		//End//
+		///////
 	});
 
 	$http({
