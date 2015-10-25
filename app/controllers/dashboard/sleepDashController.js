@@ -2,7 +2,7 @@ familee.controller('sleepDashController', ['$scope', '$timeout', '$location', '$
 		$http({
 			method: 'GET',
 			url: '/fitbit/steps',
-			data: {name: rootScope.selectedRow, }
+			data: {name: $rootScope.selectedRow, }
 		}).success (function(response){
 			console.log(response)
 		});

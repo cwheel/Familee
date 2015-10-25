@@ -4,9 +4,9 @@ familee.controller('movementDashController', ['$scope', '$timeout', '$location',
 
 	$scope.data = [[65, 59, 80, 81, 56, 55, 40]];
 
-	for (var i = 0; i < $rootScope.steeps.length; i++) {
+	for (var i = 0; i < $rootScope.steps.length; i++) {
 		//$rootScope.steeps[i]
 	};
 
-	console.log($rootScope.steeps);
+	console.log($rootScope.steps);
 }]);
