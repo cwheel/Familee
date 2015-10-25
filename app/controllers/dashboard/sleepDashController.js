@@ -1,11 +1,12 @@
 familee.controller('sleepDashController', ['$scope', '$timeout', '$location', '$http', '$rootScope', function($scope, $timeout, $location, $http, $rootScope) {
-	$scope.data = []
+	$scope.data = [[]]
 	console.log($rootScope.sleep.asleepdict)
-	for (var i = 0; i < $rootScope.sleep.asleepdict.length; i++) {
-		$scope.data[i] = $rootScope.sleep.asleepdict[i].value
-	};
-	$scope.series = ['Steps Per Day'];
 	$scope.labels = [];
+	$scope.series = ['Time Asleep'];
+	for (var i = 0; i < $rootScope.sleep.asleepdict.length; i++) {
+		$scope.data[0].push(parseInt($rootScope.sleep.asleepdict[i].value))
+		$scope.labels.push($rootScope.sleep.asleepdict[i].dateTime)
+	};
 
 	console.log($scope.data)
 	  $scope.onClick = function (points, evt) {
