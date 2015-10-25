@@ -9,9 +9,12 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	$scope.currentTab = "Overview";
 	$scope.addReminder2 = false;
 	$scope.addReminder1 = true;
-	$scope.newReminder = {phone : "", mssg : "", block : ""}
-	//$state.go('dashboard.main');
-
+	$scope.newReminder = {phone : "", mssg : "", block : ""};
+	$rootScope.devices = {};
+	$rootScope.sleep = {};
+	$rootScope.steps = {};
+	$rootScope.heartrate = {};
+	
 	$http({
 	    method  : 'GET',
 	    url     : '/authstatus',
@@ -21,6 +24,58 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 	      	$state.go("login");
 	    }
 	});
+
+	/////////////////////////////////
+	//All the data from the server//
+	////////////////////////////////
+
+	$http({
+	    method  : 'GET',
+	    url     : '/fitbit/getDevices',
+	    params  : {name: $rootScope.selectedRow}
+	})
+	.success(function(resp) {
+		if (resp != "invalid") {
+			$rootScope.devices = angular.fromJson(resp)[0];
+		}
+	});
+
+	$http({
+	    method  : 'GET',
+	    url     : '/fitbit/sleep',
+	    params  : {name: $rootScope.selectedRow}
+	})
+	.success(function(resp) {
+		if (resp != "invalid") {
+			$rootScope.sleep = angular.fromJson(resp)[0];
+		}
+	});
+
+	$http({
+	    method  : 'GET',
+	    url     : '/fitbit/steps',
+	    params  : {name: $rootScope.selectedRow}
+	})
+	.success(function(resp) {
+		if (resp != "invalid") {
+			$rootScope.steps = angular.fromJson(resp)[0];
+		}
+	});
+
+	$http({
+	    method  : 'GET',
+	    url     : '/fitbit/heartrate',
+	    params  : {name: $rootScope.selectedRow}
+	})
+	.success(function(resp) {
+		if (resp != "invalid") {
+			$rootScope.steps = angular.fromJson(resp)[0];
+		}
+	});
+
+	////////
+	//End//
+	///////
 
 	$http({
 	    method  : 'GET',
@@ -52,7 +107,7 @@ familee.controller('dashboardController', ['$scope', '$timeout', '$state', '$htt
 			$http({
 			    method  : 'POST',
 			    url     : '/addReminder',
-			      data    : $.param({phone : $scope.newReminder.phone, mssg : $scope.newReminder.mssg, block : $scope.newReminder.block}),
+			    data    : $.param({phone : $scope.newReminder.phone, mssg : $scope.newReminder.mssg, block : $scope.newReminder.block}),
 			    headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
 			})
 			.success(function(resp) {
